@@ -1,6 +1,4 @@
 <div align="center">
-  <img src="public/logo.png" alt="PolyHunt Logo" width="120" height="120" style="border-radius: 20%; margin-bottom: 20px;" />
-  
   <h1>PolyHunt</h1>
   <p><strong>The Decentralized Agentic Marketplace on Robinhood Chain</strong></p>
 
