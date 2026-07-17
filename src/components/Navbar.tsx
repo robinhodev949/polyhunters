@@ -41,6 +41,7 @@ export function Navbar() {
                 height: "56px",
                 backgroundColor: "#FFFFFF",
                 borderBottom: "1px solid #E8E8E8",
+                borderTop: "3px solid #CCFF00",
                 display: "flex", alignItems: "center",
                 justifyContent: "space-between",
                 padding: "0 16px",

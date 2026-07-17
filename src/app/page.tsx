@@ -68,28 +68,28 @@ export default function Home() {
           <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", justifyContent: "center" }}>
             <Link href="/marketplace" style={{ textDecoration: "none" }}>
               <button style={{
-                background: "#000000", color: "#FFFFFF", border: "1px solid #000000",
+                background: "#CCFF00", color: "#000000", border: "1px solid #CCFF00",
                 padding: "14px 32px", borderRadius: "8px", fontSize: "0.95rem",
-                fontWeight: 600, cursor: "pointer", fontFamily: "Inter, sans-serif",
+                fontWeight: 700, cursor: "pointer", fontFamily: "Inter, sans-serif",
                 display: "inline-flex", alignItems: "center", gap: "8px", transition: "all 0.15s",
-                boxShadow: "0 4px 14px rgba(0,0,0,0.1)"
+                boxShadow: "0 4px 14px rgba(204,255,0,0.25)"
               }}
-              onMouseEnter={e => e.currentTarget.style.transform = "translateY(-1px)"}
-              onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
+              onMouseEnter={e => { e.currentTarget.style.background = "#bfe600"; e.currentTarget.style.borderColor = "#bfe600"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#CCFF00"; e.currentTarget.style.borderColor = "#CCFF00"; e.currentTarget.style.transform = "translateY(0)"; }}
               >
                 Browse Agents <ArrowRight size={16} />
               </button>
             </Link>
             <Link href="/submit" style={{ textDecoration: "none" }}>
               <button style={{
-                background: "#FFFFFF", color: "#000000",
-                border: "1px solid #E8E8E8", boxShadow: "0 2px 4px rgba(0,0,0,0.02)",
+                background: "#000000", color: "#FFFFFF",
+                border: "1px solid #000000", boxShadow: "0 4px 14px rgba(0,0,0,0.1)",
                 padding: "14px 32px", borderRadius: "8px", fontSize: "0.95rem",
                 fontWeight: 600, cursor: "pointer", fontFamily: "Inter, sans-serif",
                 display: "inline-flex", alignItems: "center", gap: "8px", transition: "all 0.15s"
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#FAFAFA"; e.currentTarget.style.borderColor = "#E8E8E8"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "#FFFFFF"; e.currentTarget.style.borderColor = "#E8E8E8"; }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#222222"; e.currentTarget.style.borderColor = "#222222"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#000000"; e.currentTarget.style.borderColor = "#000000"; e.currentTarget.style.transform = "translateY(0)"; }}
               >
                 Submit Your Agent
               </button>

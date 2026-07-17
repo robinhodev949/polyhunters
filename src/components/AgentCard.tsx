@@ -53,10 +53,16 @@ export function AgentCard({ agent }: AgentCardProps) {
             borderRadius: "12px",
             alignItems: "center",
             boxShadow: "0 2px 8px rgba(0,0,0,0.02)",
-            transition: "box-shadow 0.2s"
+            transition: "all 0.2s ease"
         }}
-        onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.06)"; }}
-        onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.02)"; }}
+        onMouseEnter={(e) => { 
+            e.currentTarget.style.boxShadow = "0 8px 24px rgba(204,255,0,0.12)"; 
+            e.currentTarget.style.borderColor = "#CCFF00"; 
+        }}
+        onMouseLeave={(e) => { 
+            e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.02)"; 
+            e.currentTarget.style.borderColor = "#E8E8E8"; 
+        }}
         >
             {/* Logo */}
             <div
