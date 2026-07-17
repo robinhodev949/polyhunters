@@ -144,15 +144,15 @@ export default function ProfilePage({ params }: { params: Promise<{ wallet: stri
         }
     };
 
-    if (loading) return <div className="min-h-[80vh] flex items-center justify-center"><div className="spinner border-2 border-border border-t-brand rounded-full w-8 h-8 animate-spin"></div><style dangerouslySetInnerHTML={{__html: `@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}} /></div>;
+    if (loading) return <div style={{ minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center" }}><div style={{ border: "3px solid #E8E8E8", borderTopColor: "#165DFC", borderRadius: "50%", width: "32px", height: "32px", animation: "spin 1s linear infinite" }}></div><style dangerouslySetInnerHTML={{__html: `@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}} /></div>;
 
     if (!isAddress(walletAddress) || (!user && !isOwner)) {
         return (
-            <div className="min-h-[80vh] flex flex-col items-center justify-center bg-bg-secondary">
-                <div className="text-center p-15 bg-bg-secondary rounded-2xl border border-border">
-                    <UserIcon size={48} className="text-text-muted mb-4 mx-auto" />
-                    <h2 className="text-[1.5rem] font-bold m-0">Polyhunter Not Found</h2>
-                    <p className="text-text-secondary mt-2">This wallet address hasn't set up a profile yet.</p>
+            <div style={{ minHeight: "80vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "#FFFFFF" }}>
+                <div style={{ textAlign: "center", padding: "60px", background: "#FFFFFF", borderRadius: "16px", border: "1px solid #E8E8E8" }}>
+                    <UserIcon size={48} color="#D1D5DB" style={{ marginBottom: "16px" }} />
+                    <h2 style={{ fontSize: "1.5rem", fontWeight: 700, margin: 0 }}>Polyhunter Not Found</h2>
+                    <p style={{ color: "#6B6B6B", marginTop: "8px" }}>This wallet address hasn't set up a profile yet.</p>
                 </div>
             </div>
         );
@@ -162,45 +162,64 @@ export default function ProfilePage({ params }: { params: Promise<{ wallet: stri
     const displayWallet = getAddress(walletAddress);
 
     return (
-        <div className="min-h-screen bg-bg-secondary">
-            <div className="h-40 bg-gradient-to-r from-brand to-[#002d8f]"></div>
+        <div style={{ minHeight: "100vh", background: "#FFFFFF" }}>
+            <div style={{ height: "160px", background: "linear-gradient(135deg, #165DFC 0%, #002d8f 100%)" }}></div>
             
-            <div className="max-w-[860px] mx-auto px-6">
+            <div style={{ maxWidth: "860px", margin: "0 auto", padding: "0 24px" }}>
                 
                 {/* Profile Card */}
-                <div className="bg-bg-secondary rounded-2xl border border-border p-8 -mt-15 mb-8 relative shadow-sm">
+                <div style={{ 
+                    background: "#FFFFFF", borderRadius: "16px", border: "1px solid #E8E8E8", 
+                    padding: "32px", marginTop: "-60px", marginBottom: "32px", position: "relative",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.02)"
+                }}>
                     
                     {isOwner && !isEditing && (
-                        <div className="absolute top-6 right-6 flex gap-3">
-                            <Link href="/dashboard" className="bg-bg-primary text-text-primary border-none rounded-lg px-4 py-2 text-[0.9rem] font-semibold flex items-center gap-2 cursor-pointer no-underline">
+                        <div style={{ position: "absolute", top: "24px", right: "24px", display: "flex", gap: "12px" }}>
+                            <Link href="/dashboard" style={{
+                                background: "#F1F5F9", color: "#111111", border: "none", borderRadius: "8px", padding: "8px 16px",
+                                fontSize: "0.9rem", fontWeight: 600, display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", textDecoration: "none"
+                            }}>
                                 <LayoutDashboard size={16} /> My Dashboard
                             </Link>
-                            <button onClick={() => setIsEditing(true)} className="bg-bg-secondary border border-border rounded-lg px-4 py-2 text-[0.9rem] font-semibold text-text-primary flex items-center gap-2 cursor-pointer">
+                            <button onClick={() => setIsEditing(true)} style={{
+                                background: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: "8px", padding: "8px 16px",
+                                fontSize: "0.9rem", fontWeight: 600, color: "#111111", display: "flex", alignItems: "center", gap: "8px", cursor: "pointer"
+                            }}>
                                 <Edit2 size={16} /> Edit Profile
                             </button>
                         </div>
                     )}
 
                     {isOwner && isEditing && (
-                        <div className="absolute top-6 right-6 flex gap-3">
-                            <button onClick={() => setIsEditing(false)} className="bg-bg-secondary border border-border rounded-lg px-4 py-2 text-[0.9rem] font-semibold text-text-secondary flex items-center gap-2 cursor-pointer">
+                        <div style={{ position: "absolute", top: "24px", right: "24px", display: "flex", gap: "12px" }}>
+                            <button onClick={() => setIsEditing(false)} style={{
+                                background: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: "8px", padding: "8px 16px",
+                                fontSize: "0.9rem", fontWeight: 600, color: "#64748B", display: "flex", alignItems: "center", gap: "8px", cursor: "pointer"
+                            }}>
                                 <X size={16} /> Cancel
                             </button>
-                            <button onClick={handleSave} disabled={saving} className={`border-none rounded-lg px-4 py-2 text-[0.9rem] font-bold flex items-center gap-2 ${saving ? "bg-brand-lime/50 text-text-primary/50 cursor-not-allowed" : "bg-brand-lime text-text-primary cursor-pointer"}`}>
+                            <button onClick={handleSave} disabled={saving} style={{
+                                background: "#CCFF00", color: "#000000", border: "none", borderRadius: "8px", padding: "8px 16px",
+                                fontSize: "0.9rem", fontWeight: 700, display: "flex", alignItems: "center", gap: "8px", cursor: saving ? "not-allowed" : "pointer"
+                            }}>
                                 <Save size={16} /> {saving ? "Saving..." : "Save Changes"}
                             </button>
                         </div>
                     )}
 
-                    <div className="flex gap-6 items-end">
+                    <div style={{ display: "flex", gap: "24px", alignItems: "flex-end" }}>
                         
                         {/* Avatar */}
-                        <div className="relative">
-                            <div className="w-[120px] h-[120px] rounded-full bg-bg-primary border-4 border-bg-secondary overflow-hidden display flex items-center justify-center">
+                        <div style={{ position: "relative" }}>
+                            <div style={{ 
+                                width: "120px", height: "120px", borderRadius: "50%", background: "#F3F4F6", 
+                                border: "4px solid #FFFFFF", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" 
+                            }}>
                                 {isEditing ? (
-                                    form.avatarUrl ? <img src={form.avatarUrl} alt="avatar" className="w-full h-full object-cover" style={{ opacity: uploading ? 0.5 : 1 }} /> : <UserIcon size={56} className="text-text-muted" />
+                                    form.avatarUrl ? <img src={form.avatarUrl} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: uploading ? 0.5 : 1 }} /> : <UserIcon size={56} color="#D1D5DB" />
                                 ) : (
-                                    user?.avatarUrl ? <img src={user.avatarUrl} alt="avatar" className="w-full h-full object-cover" /> : <UserIcon size={56} className="text-text-muted" />
+                                    user?.avatarUrl ? <img src={user.avatarUrl} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <UserIcon size={56} color="#D1D5DB" />
                                 )}
                             </div>
                             {isEditing && (
@@ -208,38 +227,40 @@ export default function ProfilePage({ params }: { params: Promise<{ wallet: stri
                                     <button 
                                         onClick={() => fileInputRef.current?.click()}
                                         disabled={uploading}
-                                        className="absolute bottom-0 right-0 bg-brand text-white border-4 border-bg-secondary rounded-full w-10 h-10 flex items-center justify-center cursor-pointer"
+                                        style={{
+                                            position: "absolute", bottom: "0", right: "0", background: "#165DFC", color: "#FFFFFF", border: "4px solid #FFFFFF", borderRadius: "50%", width: "40px", height: "40px", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer"
+                                        }}
                                     >
                                         <Camera size={18} />
                                     </button>
-                                    <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" />
+                                    <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" style={{ display: "none" }} />
                                 </>
                             )}
                         </div>
 
                         {/* Name & Wallet */}
-                        <div className="pb-2 flex-1">
+                        <div style={{ paddingBottom: "8px", flex: 1 }}>
                             {isEditing ? (
                                 <input 
                                     type="text" 
                                     value={form.username} 
                                     onChange={e => setForm({...form, username: e.target.value})} 
                                     placeholder="Username"
-                                    className="text-[1.8rem] font-extrabold text-text-primary border border-border rounded-lg px-3 py-1 w-full max-w-[300px] outline-none mb-2 focus:border-brand"
+                                    style={{ fontSize: "1.8rem", fontWeight: 800, color: "#111111", border: "1px solid #E2E8F0", borderRadius: "8px", padding: "4px 12px", width: "100%", maxWidth: "300px", outline: "none", marginBottom: "8px" }}
                                 />
                             ) : (
-                                <h1 className="m-0 text-[2rem] font-extrabold text-text-primary">
+                                <h1 style={{ margin: 0, fontSize: "2rem", fontWeight: 800, color: "#111111" }}>
                                     {user?.username || "Anonymous Hunter"}
                                 </h1>
                             )}
-                            <div className="flex items-center gap-2 mt-2">
-                                <span className="bg-bg-primary text-text-secondary px-3 py-1 rounded-2xl text-[0.85rem] font-semibold font-mono border border-border">
+                            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "8px" }}>
+                                <span style={{ background: "#F3F4F6", color: "#64748B", padding: "4px 12px", borderRadius: "16px", fontSize: "0.85rem", fontWeight: 600, fontFamily: "monospace" }}>
                                     {displayWallet.slice(0, 6)}...{displayWallet.slice(-4)}
                                 </span>
                                 {user?.createdAt && (
                                     <>
-                                        <span className="text-text-muted">•</span>
-                                        <span className="flex items-center gap-1 text-text-secondary text-[0.85rem]">
+                                        <span style={{ color: "#D1D5DB" }}>•</span>
+                                        <span style={{ display: "flex", alignItems: "center", gap: "4px", color: "#6B6B6B", fontSize: "0.85rem" }}>
                                             <Calendar size={14} /> Joined {new Date(user.createdAt).toLocaleDateString()}
                                         </span>
                                     </>
@@ -249,26 +270,26 @@ export default function ProfilePage({ params }: { params: Promise<{ wallet: stri
                     </div>
 
                     {status && isEditing && (
-                        <div className={`mt-4 text-[0.9rem] font-medium ${status.toLowerCase().includes("error") || status.toLowerCase().includes("failed") ? "text-error" : "text-success"}`}>
+                        <div style={{ marginTop: "16px", fontSize: "0.9rem", color: status.includes("Error") || status.includes("failed") ? "#DC2626" : "#059669", fontWeight: 500 }}>
                             {status}
                         </div>
                     )}
 
                     {/* Bio */}
                     {isEditing ? (
-                        <div className="mt-6">
-                            <label className="block text-[0.9rem] font-bold text-text-secondary mb-2">Bio</label>
+                        <div style={{ marginTop: "24px" }}>
+                            <label style={{ display: "block", fontSize: "0.9rem", fontWeight: 600, color: "#4B5563", marginBottom: "8px" }}>Bio</label>
                             <textarea 
                                 value={form.bio} 
                                 onChange={e => setForm({...form, bio: e.target.value})} 
                                 placeholder="Tell everyone about yourself..."
                                 rows={3}
-                                className="w-full p-3 rounded-lg border border-border text-[1rem] outline-none resize-none font-sans"
+                                style={{ width: "100%", padding: "12px", borderRadius: "8px", border: "1px solid #E2E8F0", fontSize: "1rem", outline: "none", resize: "none", fontFamily: "inherit" }}
                             />
                         </div>
                     ) : (
                         user?.bio && (
-                            <p className="text-[1.05rem] text-text-secondary leading-relaxed mt-6 p-4 bg-bg-primary rounded-lg border border-border">
+                            <p style={{ fontSize: "1.05rem", color: "#4B5563", lineHeight: 1.6, marginTop: "24px", padding: "16px", background: "#F9FAFB", borderRadius: "8px" }}>
                                 {user.bio}
                             </p>
                         )
@@ -276,43 +297,43 @@ export default function ProfilePage({ params }: { params: Promise<{ wallet: stri
 
                     {/* Social Links Form (Edit Mode) */}
                     {isEditing && (
-                        <div className="mt-6 grid grid-cols-2 gap-4">
+                        <div style={{ marginTop: "24px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                             <div>
-                                <label className="block text-[0.85rem] font-bold text-text-secondary mb-1"><Github size={14} className="inline mr-1"/> GitHub</label>
-                                <input type="text" value={form.github} onChange={e => setForm({...form, github: e.target.value})} placeholder="https://github.com/..." className="w-full px-3 py-2 rounded-md border border-border text-[0.9rem] outline-none focus:border-brand" />
+                                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, color: "#64748B", marginBottom: "4px" }}><Github size={14} style={{ display: "inline", marginRight: "4px" }}/> GitHub</label>
+                                <input type="text" value={form.github} onChange={e => setForm({...form, github: e.target.value})} placeholder="https://github.com/..." style={{ width: "100%", padding: "8px 12px", borderRadius: "6px", border: "1px solid #E2E8F0", fontSize: "0.9rem" }} />
                             </div>
                             <div>
-                                <label className="block text-[0.85rem] font-bold text-text-secondary mb-1"><Twitter size={14} className="inline mr-1"/> X (Twitter)</label>
-                                <input type="text" value={form.twitter} onChange={e => setForm({...form, twitter: e.target.value})} placeholder="https://x.com/..." className="w-full px-3 py-2 rounded-md border border-border text-[0.9rem] outline-none focus:border-brand" />
+                                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, color: "#64748B", marginBottom: "4px" }}><Twitter size={14} style={{ display: "inline", marginRight: "4px" }}/> X (Twitter)</label>
+                                <input type="text" value={form.twitter} onChange={e => setForm({...form, twitter: e.target.value})} placeholder="https://x.com/..." style={{ width: "100%", padding: "8px 12px", borderRadius: "6px", border: "1px solid #E2E8F0", fontSize: "0.9rem" }} />
                             </div>
                             <div>
-                                <label className="block text-[0.85rem] font-bold text-text-secondary mb-1"><MessageSquare size={14} className="inline mr-1"/> Discord</label>
-                                <input type="text" value={form.discord} onChange={e => setForm({...form, discord: e.target.value})} placeholder="Username or Server Link" className="w-full px-3 py-2 rounded-md border border-border text-[0.9rem] outline-none focus:border-brand" />
+                                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, color: "#64748B", marginBottom: "4px" }}><MessageSquare size={14} style={{ display: "inline", marginRight: "4px" }}/> Discord</label>
+                                <input type="text" value={form.discord} onChange={e => setForm({...form, discord: e.target.value})} placeholder="Username or Server Link" style={{ width: "100%", padding: "8px 12px", borderRadius: "6px", border: "1px solid #E2E8F0", fontSize: "0.9rem" }} />
                             </div>
                             <div>
-                                <label className="block text-[0.85rem] font-bold text-text-secondary mb-1"><Send size={14} className="inline mr-1"/> Telegram</label>
-                                <input type="text" value={form.telegram} onChange={e => setForm({...form, telegram: e.target.value})} placeholder="https://t.me/..." className="w-full px-3 py-2 rounded-md border border-border text-[0.9rem] outline-none focus:border-brand" />
+                                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, color: "#64748B", marginBottom: "4px" }}><Send size={14} style={{ display: "inline", marginRight: "4px" }}/> Telegram</label>
+                                <input type="text" value={form.telegram} onChange={e => setForm({...form, telegram: e.target.value})} placeholder="https://t.me/..." style={{ width: "100%", padding: "8px 12px", borderRadius: "6px", border: "1px solid #E2E8F0", fontSize: "0.9rem" }} />
                             </div>
                             <div>
-                                <label className="block text-[0.85rem] font-bold text-text-secondary mb-1"><Globe size={14} className="inline mr-1"/> Website</label>
-                                <input type="text" value={form.website} onChange={e => setForm({...form, website: e.target.value})} placeholder="https://..." className="w-full px-3 py-2 rounded-md border border-border text-[0.9rem] outline-none focus:border-brand" />
+                                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, color: "#64748B", marginBottom: "4px" }}><Globe size={14} style={{ display: "inline", marginRight: "4px" }}/> Website</label>
+                                <input type="text" value={form.website} onChange={e => setForm({...form, website: e.target.value})} placeholder="https://..." style={{ width: "100%", padding: "8px 12px", borderRadius: "6px", border: "1px solid #E2E8F0", fontSize: "0.9rem" }} />
                             </div>
                             <div>
-                                <label className="block text-[0.85rem] font-bold text-text-secondary mb-1"><Mail size={14} className="inline mr-1"/> Email</label>
-                                <input type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} placeholder="hello@example.com" className="w-full px-3 py-2 rounded-md border border-border text-[0.9rem] outline-none focus:border-brand" />
+                                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, color: "#64748B", marginBottom: "4px" }}><Mail size={14} style={{ display: "inline", marginRight: "4px" }}/> Email</label>
+                                <input type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} placeholder="hello@example.com" style={{ width: "100%", padding: "8px 12px", borderRadius: "6px", border: "1px solid #E2E8F0", fontSize: "0.9rem" }} />
                             </div>
                         </div>
                     )}
 
                     {/* Social Links Display (View Mode) */}
                     {!isEditing && user && (user.github || user.twitter || user.discord || user.telegram || user.website || user.email) && (
-                        <div className="mt-6 flex flex-wrap gap-3">
-                            {user.twitter && <a href={user.twitter.startsWith('http') ? user.twitter : `https://x.com/${user.twitter}`} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-primary border border-border rounded-full color-text-primary hover:border-text-secondary no-underline text-[0.85rem] font-medium"><Twitter size={14} /> Twitter</a>}
-                            {user.github && <a href={user.github.startsWith('http') ? user.github : `https://github.com/${user.github}`} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-primary border border-border rounded-full color-text-primary hover:border-text-secondary no-underline text-[0.85rem] font-medium"><Github size={14} /> GitHub</a>}
-                            {user.telegram && <a href={user.telegram.startsWith('http') ? user.telegram : `https://t.me/${user.telegram}`} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-primary border border-border rounded-full color-text-primary hover:border-text-secondary no-underline text-[0.85rem] font-medium"><Send size={14} /> Telegram</a>}
-                            {user.discord && <span className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-primary border border-border rounded-full color-text-primary text-[0.85rem] font-medium"><MessageSquare size={14} /> {user.discord}</span>}
-                            {user.website && <a href={user.website.startsWith('http') ? user.website : `https://${user.website}`} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-primary border border-border rounded-full color-text-primary hover:border-text-secondary no-underline text-[0.85rem] font-medium"><Globe size={14} /> Website</a>}
-                            {user.email && <a href={`mailto:${user.email}`} className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-primary border border-border rounded-full color-text-primary hover:border-text-secondary no-underline text-[0.85rem] font-medium"><Mail size={14} /> Email</a>}
+                        <div style={{ marginTop: "24px", display: "flex", flexWrap: "wrap", gap: "12px" }}>
+                            {user.twitter && <a href={user.twitter.startsWith('http') ? user.twitter : `https://x.com/${user.twitter}`} target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 12px", background: "#F1F5F9", borderRadius: "20px", color: "#111111", textDecoration: "none", fontSize: "0.85rem", fontWeight: 500 }}><Twitter size={14} /> Twitter</a>}
+                            {user.github && <a href={user.github.startsWith('http') ? user.github : `https://github.com/${user.github}`} target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 12px", background: "#F1F5F9", borderRadius: "20px", color: "#111111", textDecoration: "none", fontSize: "0.85rem", fontWeight: 500 }}><Github size={14} /> GitHub</a>}
+                            {user.telegram && <a href={user.telegram.startsWith('http') ? user.telegram : `https://t.me/${user.telegram}`} target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 12px", background: "#F1F5F9", borderRadius: "20px", color: "#111111", textDecoration: "none", fontSize: "0.85rem", fontWeight: 500 }}><Send size={14} /> Telegram</a>}
+                            {user.discord && <span style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 12px", background: "#F1F5F9", borderRadius: "20px", color: "#111111", fontSize: "0.85rem", fontWeight: 500 }}><MessageSquare size={14} /> {user.discord}</span>}
+                            {user.website && <a href={user.website.startsWith('http') ? user.website : `https://${user.website}`} target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 12px", background: "#F1F5F9", borderRadius: "20px", color: "#111111", textDecoration: "none", fontSize: "0.85rem", fontWeight: 500 }}><Globe size={14} /> Website</a>}
+                            {user.email && <a href={`mailto:${user.email}`} style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 12px", background: "#F1F5F9", borderRadius: "20px", color: "#111111", textDecoration: "none", fontSize: "0.85rem", fontWeight: 500 }}><Mail size={14} /> Email</a>}
                         </div>
                     )}
                 </div>
@@ -320,47 +341,56 @@ export default function ProfilePage({ params }: { params: Promise<{ wallet: stri
                 {/* Tabs */}
                 {!isEditing && (
                     <>
-                        <div className="flex gap-8 border-b border-border mb-8 overflow-x-auto">
+                        <div style={{ display: "flex", gap: "32px", borderBottom: "1px solid #E8E8E8", marginBottom: "32px", overflowX: "auto" }}>
                             <button
                                 onClick={() => setActiveTab("hunted")}
-                                className={`pb-4 bg-transparent border-none cursor-pointer whitespace-nowrap text-[1.05rem] font-bold transition-all duration-200 ${
-                                    activeTab === "hunted" ? "text-brand border-b-2 border-brand" : "text-text-muted border-b-2 border-transparent"
-                                }`}
+                                style={{
+                                    padding: "0 0 16px 0", background: "none", border: "none", cursor: "pointer", whiteSpace: "nowrap",
+                                    fontSize: "1.05rem", fontWeight: 700, color: activeTab === "hunted" ? "#165DFC" : "#9CA3AF",
+                                    borderBottom: activeTab === "hunted" ? "3px solid #165DFC" : "3px solid transparent",
+                                    transition: "all 0.2s"
+                                }}
                             >
                                 Hunted Agents ({(user?.hunted || []).length})
                             </button>
                             <button
                                 onClick={() => setActiveTab("built")}
-                                className={`pb-4 bg-transparent border-none cursor-pointer whitespace-nowrap text-[1.05rem] font-bold transition-all duration-200 ${
-                                    activeTab === "built" ? "text-brand border-b-2 border-brand" : "text-text-muted border-b-2 border-transparent"
-                                }`}
+                                style={{
+                                    padding: "0 0 16px 0", background: "none", border: "none", cursor: "pointer", whiteSpace: "nowrap",
+                                    fontSize: "1.05rem", fontWeight: 700, color: activeTab === "built" ? "#165DFC" : "#9CA3AF",
+                                    borderBottom: activeTab === "built" ? "3px solid #165DFC" : "3px solid transparent",
+                                    transition: "all 0.2s"
+                                }}
                             >
                                 Built Agents ({(user?.agents || []).length})
                             </button>
                             <button
                                 onClick={() => setActiveTab("badges")}
-                                className={`pb-4 bg-transparent border-none cursor-pointer whitespace-nowrap text-[1.05rem] font-bold transition-all duration-200 flex items-center gap-1.5 ${
-                                    activeTab === "badges" ? "text-brand border-b-2 border-brand" : "text-text-muted border-b-2 border-transparent"
-                                }`}
+                                style={{
+                                    padding: "0 0 16px 0", background: "none", border: "none", cursor: "pointer", whiteSpace: "nowrap",
+                                    fontSize: "1.05rem", fontWeight: 700, color: activeTab === "badges" ? "#165DFC" : "#9CA3AF",
+                                    borderBottom: activeTab === "badges" ? "3px solid #165DFC" : "3px solid transparent",
+                                    transition: "all 0.2s", display: "flex", alignItems: "center", gap: "6px"
+                                }}
                             >
                                 <Award size={18} /> Badges
                             </button>
                         </div>
 
                         {/* Tab Content */}
-                        <div className="flex flex-col gap-4 pb-20">
+                        <div style={{ display: "flex", flexDirection: "column", gap: "16px", paddingBottom: "80px" }}>
                             {activeTab === "badges" ? (
-                                <div className="text-center py-20 px-5 bg-bg-secondary rounded-2xl border border-dashed border-text-muted text-text-secondary">
-                                    <Award size={40} className="text-text-muted mb-4 mx-auto" />
-                                    <h3 className="m-0 mb-2 text-[1.2rem] text-text-primary">Coming Soon!</h3>
-                                    <p className="m-0 text-[1rem]">
+                                <div style={{ textAlign: "center", padding: "80px 20px", background: "#FFFFFF", borderRadius: "16px", border: "1px dashed #D1D5DB", color: "#6B6B6B" }}>
+                                    <Award size={40} color="#D1D5DB" style={{ marginBottom: "16px" }} />
+                                    <h3 style={{ margin: "0 0 8px 0", fontSize: "1.2rem", color: "#111111" }}>Coming Soon!</h3>
+                                    <p style={{ margin: 0, fontSize: "1rem" }}>
                                         Polyhunters will soon be able to earn on-chain badges for their discoveries.
                                     </p>
                                 </div>
                             ) : agentsToShow.length === 0 ? (
-                                <div className="text-center py-20 px-5 bg-bg-secondary rounded-2xl border border-dashed border-text-muted text-text-secondary">
-                                    <LinkIcon size={32} className="text-text-muted mb-4 mx-auto" />
-                                    <p className="m-0 text-[1.1rem]">
+                                <div style={{ textAlign: "center", padding: "80px 20px", background: "#FFFFFF", borderRadius: "16px", border: "1px dashed #D1D5DB", color: "#6B6B6B" }}>
+                                    <LinkIcon size={32} color="#D1D5DB" style={{ marginBottom: "16px" }} />
+                                    <p style={{ margin: 0, fontSize: "1.1rem" }}>
                                         {activeTab === "hunted" ? "This user hasn't discovered any agents yet." : "This user hasn't built any agents yet."}
                                     </p>
                                 </div>
