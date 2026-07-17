@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">PolyHunt</string>
+    <string name="title_activity_main">PolyHunt</string>
+    <string name="package_name">com.polyhunt.app</string>
+    <string name="custom_url_scheme">com.polyhunt.app</string>
+</resources>

@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  wallet    String   @unique // EVM wallet address (Robinhood Chain)
+  createdAt DateTime @default(now())
+  
+  username  String?  @unique
+  bio       String?
+  avatarUrl String?
+  email     String?
+  github    String?
+  twitter   String?
+  discord   String?
+  telegram  String?
+  website   String?
+  
+  agents  Agent[]  @relation("OwnedAgents")
+  rentals Rental[] @relation("UserRentals")
+  hunted  Agent[]  @relation("HuntedAgents")
+}
+
+model Agent {
+  id              String   @id @default(uuid())
+  name            String
+  tagline         String
+  description     String?
+  pricePerDay     Float
+  status          String   @default("live") // live or beta
+  roi             Float    @default(0.0)
+  tags            String[]
+  dockerImageUrl  String?  // Docker image for PolyHunt cloud orchestration
+  dockerConfig    Json?
+  githubUrl       String?  // Public GitHub repo (strongly recommended)
+  webhookUrl      String?  // Optional: OpenClaw gateway webhook URL
+  hookToken       String?  // Optional: webhook authentication token
+  createdAt       DateTime @default(now())
+  upvotes         Int      @default(0)
+  totalRentals    Int      @default(0)  // Cache for leaderboard sorting
+  ownerWallet     String   @default("") // EVM address (Robinhood Chain) for payouts
+  marketSourceIds String[]              // Pluggable prediction markets traded on
+  
+  ownerId String
+  owner   User     @relation("OwnedAgents", fields: [ownerId], references: [id])
+  
+  hunterId String?
+  hunter   User?   @relation("HuntedAgents", fields: [hunterId], references: [id])
+  
+  rentals Rental[] @relation("AgentRentals")
+}
+
+model Rental {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  startedAt DateTime?
+  expiresAt DateTime
+
+  // Unique rental code issued to the renter (e.g. RC-a1b2c3d4)
+  rentalCode String   @unique @default("")
+
+  // Payment tracking
+  totalAmount    Float    // USDC amount the renter must pay
+  depositTxSig   String?  // EVM transaction hash proving deposit
+  paymentStatus  String   @default("pending") // pending | confirmed | expired
+  
+  // Payout tracking
+  ownerAmount    Float?   // USDC sent to agent owner after rental
+  platformFee    Float?   // PolyHunt platform cut (2%)
+  payoutTxSig    String?  // EVM transaction hash for owner payout
+  payoutStatus   String   @default("unpaid") // unpaid | paid
+
+  userId  String
+  agentId String
+  
+  user  User  @relation("UserRentals", fields: [userId], references: [id])
+  agent Agent @relation("AgentRentals", fields: [agentId], references: [id])
+
+  containerStatus String  @default("pending") // pending, running, stopped
+  containerId     String?
+}
