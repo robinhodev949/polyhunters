@@ -3,15 +3,15 @@
 
 /* ── Design Tokens ────────────────────────────────────────── */
 :root {
-  --brand:        #3358FF;   /* PolyHunt blue */
-  --brand-dark:   #2244DD;
-  --brand-light:  #5B7AFF;
-  --blue:         #3358FF;
+  --brand:        #165DFC;   /* PolyHunt blue */
+  --brand-dark:   #0047ca;
+  --brand-light:  #165DFC;
+  --blue:         #165DFC;
   --success:      #0A7C4E;
   --border:       #E8E8E8;
-  --text-primary: #1A1A1A;
+  --text-primary: #111111;
   --text-secondary: #6B6B6B;
-  --text-muted:   #ABABAB;
+  --text-muted:   #9CA3AF;
   --bg:           #FAFAFA;
   --bg-card:      #FFFFFF;
   --radius:       8px;
@@ -47,7 +47,7 @@ body {
 /* ── Scrollbar ───────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: #E8E8E8; border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
 
 .terminal-scroll::-webkit-scrollbar-track { background: #0a0a0a; }

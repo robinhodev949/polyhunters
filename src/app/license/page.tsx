@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function License() {
     return (
-        <div style={{ maxWidth: "800px", margin: "40px auto", padding: "0 24px", color: "#1A1A1A", fontFamily: "var(--font-sans)", lineHeight: 1.6 }}>
+        <div style={{ maxWidth: "800px", margin: "40px auto", padding: "0 24px", color: "#111111", fontFamily: "var(--font-sans)", lineHeight: 1.6 }}>
             <h1 style={{ fontSize: "2rem", fontWeight: 700, marginBottom: "24px" }}>Terms of Service & License</h1>
             <p style={{ color: "#6B6B6B", marginBottom: "32px", fontSize: "0.95rem" }}>Last updated: March 2026</p>
 
@@ -26,7 +26,7 @@ export default function License() {
                 <p>Builders listing agents on PolyHunt retain the intellectual property rights to their underlying models. By listing an agent, you grant PolyHunt a license to display, distribute, and orchestrate the execution of that agent to platform users.</p>
             </section>
 
-            <Link href="/" style={{ display: "inline-block", marginTop: "24px", color: "#3358FF", textDecoration: "none", fontWeight: 600 }}>
+            <Link href="/" style={{ display: "inline-block", marginTop: "24px", color: "#165DFC", textDecoration: "none", fontWeight: 600 }}>
                 ← Back to Home
             </Link>
         </div>

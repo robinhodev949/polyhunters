@@ -73,7 +73,7 @@ export default function PrivacyPolicy() {
                 </p>
             </section>
 
-            <section style={{ marginBottom: "32px", padding: "24px", background: "#F3F4F6", borderRadius: "12px" }}>
+            <section style={{ marginBottom: "32px", padding: "24px", background: "#FAFAFA", borderRadius: "12px" }}>
                 <h2 style={{ fontSize: "1.3rem", fontWeight: 700, marginBottom: "12px", color: "#111111" }}>7. Contact Us</h2>
                 <p style={{ margin: 0 }}>
                     If you have questions or comments about this Privacy Policy, please contact us at:<br /><br />

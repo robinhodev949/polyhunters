@@ -46,7 +46,7 @@ function RentalCard({ rental }: { rental: Rental }) {
                     <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "#111111", margin: "0 0 4px 0" }}>
                         {rental.agent.name}
                     </h3>
-                    <p style={{ fontSize: "0.8rem", color: "#6B7280", margin: 0 }}>{rental.agent.tagline}</p>
+                    <p style={{ fontSize: "0.8rem", color: "#6B6B6B", margin: 0 }}>{rental.agent.tagline}</p>
                 </div>
                 <span style={{
                     fontSize: "0.75rem", fontWeight: 700, color: statusColor,
@@ -59,7 +59,7 @@ function RentalCard({ rental }: { rental: Rental }) {
 
             {/* Rental Code */}
             <div style={{ background: "rgba(22,93,252,0.04)", border: "1px solid rgba(22,93,252,0.1)", borderRadius: "8px", padding: "12px" }}>
-                <div style={{ fontSize: "0.7rem", fontWeight: 700, color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "6px" }}>
+                <div style={{ fontSize: "0.7rem", fontWeight: 700, color: "#6B6B6B", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "6px" }}>
                     Your Rental Code
                 </div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -69,7 +69,7 @@ function RentalCard({ rental }: { rental: Rental }) {
                     <button onClick={() => copy(rental.rentalCode)} style={{
                         background: "none", border: "none", cursor: "pointer", padding: "4px"
                     }}>
-                        {copied ? <Check size={16} color="#0A7C4E" /> : <Copy size={16} color="#6B7280" />}
+                        {copied ? <Check size={16} color="#0A7C4E" /> : <Copy size={16} color="#6B6B6B" />}
                     </button>
                 </div>
                 <p style={{ fontSize: "0.72rem", color: "#9CA3AF", margin: "6px 0 0 0" }}>
@@ -79,17 +79,17 @@ function RentalCard({ rental }: { rental: Rental }) {
 
             {/* Details row */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
-                <div style={{ textAlign: "center", background: "#F9FAFB", borderRadius: "6px", padding: "10px", border: "1px solid #E8E8E8" }}>
+                <div style={{ textAlign: "center", background: "#FAFAFA", borderRadius: "6px", padding: "10px", border: "1px solid #E8E8E8" }}>
                     <div style={{ fontSize: "0.7rem", color: "#9CA3AF", marginBottom: "2px" }}>Paid</div>
                     <div style={{ fontSize: "0.9rem", fontWeight: 700, color: "#111111" }}>{rental.totalAmount} USDC</div>
                 </div>
-                <div style={{ textAlign: "center", background: "#F9FAFB", borderRadius: "6px", padding: "10px", border: "1px solid #E8E8E8" }}>
+                <div style={{ textAlign: "center", background: "#FAFAFA", borderRadius: "6px", padding: "10px", border: "1px solid #E8E8E8" }}>
                     <div style={{ fontSize: "0.7rem", color: "#9CA3AF", marginBottom: "2px" }}>Started</div>
                     <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "#111111" }}>
                         {rental.startedAt ? new Date(rental.startedAt).toLocaleDateString() : "—"}
                     </div>
                 </div>
-                <div style={{ textAlign: "center", background: "#F9FAFB", borderRadius: "6px", padding: "10px", border: "1px solid #E8E8E8" }}>
+                <div style={{ textAlign: "center", background: "#FAFAFA", borderRadius: "6px", padding: "10px", border: "1px solid #E8E8E8" }}>
                     <div style={{ fontSize: "0.7rem", color: "#9CA3AF", marginBottom: "2px" }}>Expires</div>
                     <div style={{ fontSize: "0.8rem", fontWeight: 600, color: isExpired ? "#DC2626" : "#111111" }}>
                         {new Date(rental.expiresAt).toLocaleDateString()}
@@ -118,7 +118,7 @@ function RentalCard({ rental }: { rental: Rental }) {
                         border: "1px solid #E8E8E8", borderRadius: "6px", fontSize: "0.8rem",
                         fontWeight: 600, cursor: "pointer", transition: "all 0.15s"
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "#F9FAFB"; e.currentTarget.style.borderColor = "#D1D5DB"; }}
+                    onMouseEnter={e => { e.currentTarget.style.background = "#FAFAFA"; e.currentTarget.style.borderColor = "#E8E8E8"; }}
                     onMouseLeave={e => { e.currentTarget.style.background = "#FFFFFF"; e.currentTarget.style.borderColor = "#E8E8E8"; }}
                     >
                         API Docs
@@ -158,7 +158,7 @@ export default function DashboardPage() {
 
     if (!isConnected) {
         return (
-            <div style={{ background: "#FFFFFF", minHeight: "calc(100vh - 56px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ background: "#FAFAFA", minHeight: "calc(100vh - 56px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <div style={{
                     background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "12px",
                     padding: "48px", maxWidth: "440px", width: "100%", textAlign: "center",
@@ -208,7 +208,7 @@ export default function DashboardPage() {
     }
 
     return (
-        <div style={{ background: "#FFFFFF", minHeight: "calc(100vh - 56px)" }}>
+        <div style={{ background: "#FAFAFA", minHeight: "calc(100vh - 56px)" }}>
             {/* Header */}
             <div style={{ background: "#FFFFFF", borderBottom: "1px solid #E8E8E8" }}>
                 <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "28px 32px" }}>
@@ -238,18 +238,18 @@ export default function DashboardPage() {
                 <div style={{ marginBottom: "32px" }}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
                         <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#111111", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
-                            <Terminal size={16} color="#6B7280" /> Active Agents
-                            <span style={{ fontSize: "0.75rem", background: "#F3F4F6", color: "#6B7280", padding: "2px 8px", borderRadius: "4px", fontWeight: 600 }}>
+                            <Terminal size={16} color="#6B6B6B" /> Active Agents
+                            <span style={{ fontSize: "0.75rem", background: "#FAFAFA", color: "#6B6B6B", padding: "2px 8px", borderRadius: "4px", fontWeight: 600 }}>
                                 {loading ? "..." : rentals.length}
                             </span>
                         </h2>
                         <button onClick={loadRentals} style={{
                             background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "6px",
                             padding: "6px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px",
-                            fontSize: "0.8rem", color: "#6B7280", transition: "all 0.15s"
+                            fontSize: "0.8rem", color: "#6B6B6B", transition: "all 0.15s"
                         }}
-                        onMouseEnter={e => { e.currentTarget.style.borderColor = "#D1D5DB"; e.currentTarget.style.color = "#111111"; }}
-                        onMouseLeave={e => { e.currentTarget.style.borderColor = "#E8E8E8"; e.currentTarget.style.color = "#6B7280"; }}
+                        onMouseEnter={e => { e.currentTarget.style.borderColor = "#E8E8E8"; e.currentTarget.style.color = "#111111"; }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = "#E8E8E8"; e.currentTarget.style.color = "#6B6B6B"; }}
                         >
                             <RefreshCw size={13} /> Refresh
                         </button>
@@ -262,7 +262,7 @@ export default function DashboardPage() {
                             background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "12px",
                             padding: "56px 32px", textAlign: "center"
                         }}>
-                            <Database size={32} color="#D1D5DB" style={{ margin: "0 auto 16px", display: "block" }} />
+                            <Database size={32} color="#E8E8E8" style={{ margin: "0 auto 16px", display: "block" }} />
                             <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#111111", marginBottom: "8px" }}>
                                 No active agents
                             </h3>

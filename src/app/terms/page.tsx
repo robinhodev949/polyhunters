@@ -49,7 +49,7 @@ export default function TermsOfService() {
                 </p>
             </section>
 
-            <section style={{ marginBottom: "32px", padding: "24px", background: "#F3F4F6", borderRadius: "12px" }}>
+            <section style={{ marginBottom: "32px", padding: "24px", background: "#FAFAFA", borderRadius: "12px" }}>
                 <h2 style={{ fontSize: "1.3rem", fontWeight: 700, marginBottom: "12px", color: "#111111" }}>5. Contact Information</h2>
                 <p style={{ margin: 0 }}>
                     In order to resolve a complaint regarding the Site or to receive further information regarding use of the Site, please contact us at:<br /><br />

@@ -149,10 +149,10 @@ export function RentModal({ agent, onClose }: RentModalProps) {
                 {/* Step: Configure */}
                 {step === "configure" && (
                     <>
-                        <h2 style={{ fontSize: "1.3rem", fontWeight: 700, margin: "0 0 4px 0", color: "#111827" }}>
+                        <h2 style={{ fontSize: "1.3rem", fontWeight: 700, margin: "0 0 4px 0", color: "#111111" }}>
                             Rent {agent.name}
                         </h2>
-                        <p style={{ color: "#6B7280", fontSize: "0.9rem", margin: "0 0 28px 0" }}>
+                        <p style={{ color: "#6B6B6B", fontSize: "0.9rem", margin: "0 0 28px 0" }}>
                             {agent.tagline}
                         </p>
 
@@ -167,7 +167,7 @@ export function RentModal({ agent, onClose }: RentModalProps) {
                                         border: "1px solid", cursor: "pointer",
                                         fontSize: "0.85rem",
                                         backgroundColor: days === d ? "#CCFF00" : "transparent",
-                                        borderColor: days === d ? "#CCFF00" : "#E5E7EB",
+                                        borderColor: days === d ? "#CCFF00" : "#E8E8E8",
                                         color: days === d ? "#000000" : "#6B6B6B",
                                         fontWeight: days === d ? 700 : 500,
                                         transition: "all 0.15s"
@@ -180,15 +180,15 @@ export function RentModal({ agent, onClose }: RentModalProps) {
 
                         <div style={{ background: "rgba(22,93,252,0.04)", border: "1px solid rgba(22,93,252,0.15)", borderRadius: "12px", padding: "16px", marginBottom: "24px" }}>
                             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
-                                <span style={{ color: "#6B7280", fontSize: "0.9rem" }}>Daily Rate</span>
-                                <span style={{ fontWeight: 600, color: "#111827" }}>{agent.pricePerDay} USDC</span>
+                                <span style={{ color: "#6B6B6B", fontSize: "0.9rem" }}>Daily Rate</span>
+                                <span style={{ fontWeight: 600, color: "#111111" }}>{agent.pricePerDay} USDC</span>
                             </div>
                             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
-                                <span style={{ color: "#6B7280", fontSize: "0.9rem" }}>Duration</span>
-                                <span style={{ fontWeight: 600, color: "#111827" }}>{days} days</span>
+                                <span style={{ color: "#6B6B6B", fontSize: "0.9rem" }}>Duration</span>
+                                <span style={{ fontWeight: 600, color: "#111111" }}>{days} days</span>
                             </div>
                             <div style={{ borderTop: "1px solid rgba(22,93,252,0.15)", paddingTop: "8px", display: "flex", justifyContent: "space-between" }}>
-                                <span style={{ fontWeight: 700, color: "#111827" }}>Total</span>
+                                <span style={{ fontWeight: 700, color: "#111111" }}>Total</span>
                                 <span style={{ fontWeight: 700, color: "#165DFC", fontSize: "1.1rem" }}>{totalCost} USDC</span>
                             </div>
                         </div>
@@ -221,10 +221,10 @@ export function RentModal({ agent, onClose }: RentModalProps) {
                 {/* Step: Pay */}
                 {step === "pay" && (
                     <>
-                        <h2 style={{ fontSize: "1.3rem", fontWeight: 700, margin: "0 0 8px 0", color: "#111827" }}>
+                        <h2 style={{ fontSize: "1.3rem", fontWeight: 700, margin: "0 0 8px 0", color: "#111111" }}>
                             Send USDC Payment
                         </h2>
-                        <p style={{ color: "#6B7280", fontSize: "0.9rem", margin: "0 0 20px 0", lineHeight: 1.5 }}>
+                        <p style={{ color: "#6B6B6B", fontSize: "0.9rem", margin: "0 0 20px 0", lineHeight: 1.5 }}>
                             Send exactly <strong>{totalCost} USDC</strong> on Robinhood Chain to the escrow wallet.
                         </p>
 
@@ -258,24 +258,24 @@ export function RentModal({ agent, onClose }: RentModalProps) {
                         )}
 
                         <div style={{ display: "flex", alignItems: "center", gap: "8px", margin: "16px 0", color: "#9CA3AF" }}>
-                            <div style={{ flex: 1, height: "1px", background: "#E5E7EB" }}></div>
+                            <div style={{ flex: 1, height: "1px", background: "#E8E8E8" }}></div>
                             <span style={{ fontSize: "0.75rem", textTransform: "uppercase", fontWeight: 700 }}>Or pay manually</span>
-                            <div style={{ flex: 1, height: "1px", background: "#E5E7EB" }}></div>
+                            <div style={{ flex: 1, height: "1px", background: "#E8E8E8" }}></div>
                         </div>
 
                         {/* Escrow wallet copy container */}
-                        <div style={{ background: "#F9FAFB", border: "1px solid #E8E8E8", borderRadius: "10px", padding: "14px", marginBottom: "16px" }}>
+                        <div style={{ background: "#FAFAFA", border: "1px solid #E8E8E8", borderRadius: "10px", padding: "14px", marginBottom: "16px" }}>
                             <div style={{ fontSize: "0.75rem", color: "#9CA3AF", marginBottom: "6px", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.06em" }}>
                                 PolyHunt Escrow Wallet (Robinhood Chain)
                             </div>
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
-                                <code style={{ fontSize: "0.8rem", color: "#111827", wordBreak: "break-all", flex: 1, fontFamily: "monospace" }}>
+                                <code style={{ fontSize: "0.8rem", color: "#111111", wordBreak: "break-all", flex: 1, fontFamily: "monospace" }}>
                                     {escrowWallet}
                                 </code>
                                 <button onClick={() => copyToClipboard(escrowWallet)} style={{
                                     background: "none", border: "none", cursor: "pointer", flexShrink: 0
                                 }}>
-                                    {copied ? <Check size={16} color="#16A34A" /> : <Copy size={16} color="#6B7280" />}
+                                    {copied ? <Check size={16} color="#16A34A" /> : <Copy size={16} color="#6B6B6B" />}
                                 </button>
                             </div>
                         </div>
@@ -290,8 +290,8 @@ export function RentModal({ agent, onClose }: RentModalProps) {
                             onChange={e => setManualTxHash(e.target.value)}
                             style={{
                                 width: "100%", padding: "10px 12px", borderRadius: "8px",
-                                border: "1px solid #D1D5DB", fontSize: "0.85rem",
-                                color: "#111827", marginBottom: "8px", boxSizing: "border-box"
+                                border: "1px solid #E8E8E8", fontSize: "0.85rem",
+                                color: "#111111", marginBottom: "8px", boxSizing: "border-box"
                             }}
                         />
                         <p style={{ color: "#9CA3AF", fontSize: "0.75rem", margin: "0 0 16px 0", lineHeight: 1.4 }}>
@@ -320,10 +320,10 @@ export function RentModal({ agent, onClose }: RentModalProps) {
                     <>
                         <div style={{ textAlign: "center", padding: "8px 0 16px" }}>
                             <div style={{ fontSize: "3rem", marginBottom: "12px" }}>🎉</div>
-                            <h2 style={{ fontSize: "1.4rem", fontWeight: 700, margin: "0 0 6px 0", color: "#111827" }}>
+                            <h2 style={{ fontSize: "1.4rem", fontWeight: 700, margin: "0 0 6px 0", color: "#111111" }}>
                                 Agent is Live!
                             </h2>
-                            <p style={{ color: "#6B7280", margin: "0 0 20px 0", fontSize: "0.9rem" }}>
+                            <p style={{ color: "#6B6B6B", margin: "0 0 20px 0", fontSize: "0.9rem" }}>
                                 <strong>{agent.name}</strong> is now trading on your prediction markets.
                             </p>
                         </div>
@@ -345,7 +345,7 @@ export function RentModal({ agent, onClose }: RentModalProps) {
                                     {codeCopied ? <Check size={18} color="#0A7C4E" /> : <Copy size={18} color="#165DFC" />}
                                 </button>
                             </div>
-                            <p style={{ fontSize: "0.75rem", color: "#6B7280", margin: "8px 0 0 0", lineHeight: 1.4 }}>
+                            <p style={{ fontSize: "0.75rem", color: "#6B6B6B", margin: "8px 0 0 0", lineHeight: 1.4 }}>
                                 Use this code in your Dashboard and the PolyHunt API to authenticate your agent connection.
                             </p>
                         </div>
@@ -353,13 +353,13 @@ export function RentModal({ agent, onClose }: RentModalProps) {
                         {/* Expiry */}
                         <div style={{ background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "10px", padding: "12px", marginBottom: "20px" }}>
                             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
-                                <span style={{ color: "#6B7280", fontSize: "0.85rem" }}>Expires</span>
-                                <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "#111827" }}>
+                                <span style={{ color: "#6B6B6B", fontSize: "0.85rem" }}>Expires</span>
+                                <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "#111111" }}>
                                     {result?.expiresAt ? new Date(result.expiresAt).toLocaleDateString() : "—"}
                                 </span>
                             </div>
                             <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                <span style={{ color: "#6B7280", fontSize: "0.85rem" }}>Status</span>
+                                <span style={{ color: "#6B6B6B", fontSize: "0.85rem" }}>Status</span>
                                 <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "#16A34A" }}>✓ Running</span>
                             </div>
                         </div>

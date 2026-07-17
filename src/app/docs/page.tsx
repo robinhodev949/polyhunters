@@ -66,7 +66,7 @@ const sections = [
 
 export default function DocsPage() {
     return (
-        <div style={{ maxWidth: "900px", margin: "0 auto", padding: "100px 24px 80px", color: "#111111", background: "#FFFFFF" }}>
+        <div style={{ maxWidth: "900px", margin: "0 auto", padding: "100px 24px 80px", color: "#111111", background: "#FAFAFA" }}>
 
             {/* Header */}
             <div style={{ marginBottom: "60px" }}>
@@ -82,44 +82,44 @@ export default function DocsPage() {
             {/* Quick Action Cards */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "16px", marginBottom: "60px" }}>
                 <Link href="/marketplace" style={{ textDecoration: "none" }}>
-                    <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "24px", cursor: "pointer", transition: "border-color 0.2s" }}
+                    <div style={{ background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "12px", padding: "24px", cursor: "pointer", transition: "border-color 0.2s" }}
                         onMouseEnter={e => (e.currentTarget.style.borderColor = "#165DFC")}
-                        onMouseLeave={e => (e.currentTarget.style.borderColor = "#E5E7EB")}>
+                        onMouseLeave={e => (e.currentTarget.style.borderColor = "#E8E8E8")}>
                         <div style={{ color: "#165DFC", marginBottom: "12px" }}><Zap size={20} /></div>
                         <h3 style={{ fontSize: "1rem", fontWeight: 600, color: "#111111", margin: "0 0 6px 0" }}>Rent an Agent</h3>
-                        <p style={{ color: "#6B7280", fontSize: "0.9rem", margin: 0 }}>Browse the marketplace and deploy in seconds</p>
+                        <p style={{ color: "#6B6B6B", fontSize: "0.9rem", margin: 0 }}>Browse the marketplace and deploy in seconds</p>
                     </div>
                 </Link>
                 <Link href="/submit" style={{ textDecoration: "none" }}>
-                    <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "24px", cursor: "pointer", transition: "border-color 0.2s" }}
+                    <div style={{ background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "12px", padding: "24px", cursor: "pointer", transition: "border-color 0.2s" }}
                         onMouseEnter={e => (e.currentTarget.style.borderColor = "#165DFC")}
-                        onMouseLeave={e => (e.currentTarget.style.borderColor = "#E5E7EB")}>
+                        onMouseLeave={e => (e.currentTarget.style.borderColor = "#E8E8E8")}>
                         <div style={{ color: "#165DFC", marginBottom: "12px" }}><Upload size={20} /></div>
                         <h3 style={{ fontSize: "1rem", fontWeight: 600, color: "#111111", margin: "0 0 6px 0" }}>List Your Agent</h3>
-                        <p style={{ color: "#6B7280", fontSize: "0.9rem", margin: 0 }}>Earn USDC by listing your trading agent</p>
+                        <p style={{ color: "#6B6B6B", fontSize: "0.9rem", margin: 0 }}>Earn USDC by listing your trading agent</p>
                     </div>
                 </Link>
                 <Link href="/dashboard" style={{ textDecoration: "none" }}>
-                    <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "24px", cursor: "pointer", transition: "border-color 0.2s" }}
+                    <div style={{ background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "12px", padding: "24px", cursor: "pointer", transition: "border-color 0.2s" }}
                         onMouseEnter={e => (e.currentTarget.style.borderColor = "#165DFC")}
-                        onMouseLeave={e => (e.currentTarget.style.borderColor = "#E5E7EB")}>
+                        onMouseLeave={e => (e.currentTarget.style.borderColor = "#E8E8E8")}>
                         <div style={{ color: "#165DFC", marginBottom: "12px" }}><Wallet size={20} /></div>
                         <h3 style={{ fontSize: "1rem", fontWeight: 600, color: "#111111", margin: "0 0 6px 0" }}>Your Dashboard</h3>
-                        <p style={{ color: "#6B7280", fontSize: "0.9rem", margin: 0 }}>Monitor live trades and manage your rentals</p>
+                        <p style={{ color: "#6B6B6B", fontSize: "0.9rem", margin: 0 }}>Monitor live trades and manage your rentals</p>
                     </div>
                 </Link>
             </div>
 
             {/* Pluggable Market Integration Section for Builders */}
-            <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "16px", padding: "32px", marginBottom: "40px" }}>
+            <div style={{ background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "16px", padding: "32px", marginBottom: "40px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
                     <Terminal size={22} color="#165DFC" />
                     <h2 style={{ fontSize: "1.25rem", fontWeight: 600, color: "#111111", margin: 0 }}>Adding a new PredictionMarketSource</h2>
                 </div>
-                <p style={{ color: "#4B5563", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: "16px" }}>
+                <p style={{ color: "#6B6B6B", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: "16px" }}>
                     To add support for a new prediction market type (e.g. Kalshi, Manifold, or custom contracts), implement the pluggable registry interface in your agent index module:
                 </p>
-                <pre style={{ background: "#F3F4F6", padding: "16px", borderRadius: "8px", overflowX: "auto", fontSize: "0.85rem", color: "#111827", lineHeight: 1.5, fontFamily: "monospace" }}>
+                <pre style={{ background: "#FAFAFA", padding: "16px", borderRadius: "8px", overflowX: "auto", fontSize: "0.85rem", color: "#111111", lineHeight: 1.5, fontFamily: "monospace" }}>
 {`import { PredictionMarketSource, PredictionMarket } from "@/lib/markets/types";
 import { registerMarketSource } from "@/lib/markets/registry";
 
@@ -157,7 +157,7 @@ registerMarketSource(CustomMarketSource);`}
                     <a href="https://docs.polymarket.com/builders/overview" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: "#165DFC", textDecoration: "none", fontSize: "0.85rem", fontWeight: 600 }}>
                         Polymarket Builder Docs <ExternalLink size={14} />
                     </a>
-                    <span style={{ color: "#D1D5DB" }}>|</span>
+                    <span style={{ color: "#E8E8E8" }}>|</span>
                     <a href="https://docs.robinhood.com/chain/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: "#165DFC", textDecoration: "none", fontSize: "0.85rem", fontWeight: 600 }}>
                         Robinhood Chain L2 Docs <ExternalLink size={14} />
                     </a>
@@ -167,15 +167,15 @@ registerMarketSource(CustomMarketSource);`}
             {/* Documentation Sections */}
             <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
                 {sections.map((section) => (
-                    <div key={section.id} style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "16px", padding: "32px" }}>
+                    <div key={section.id} style={{ background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "16px", padding: "32px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
                             {section.icon}
                             <h2 style={{ fontSize: "1.25rem", fontWeight: 600, color: "#111111", margin: 0 }}>{section.title}</h2>
                         </div>
                         <ol style={{ margin: 0, padding: "0 0 0 20px", display: "flex", flexDirection: "column", gap: "12px" }}>
                             {section.content.map((step, i) => (
-                                <li key={i} style={{ color: "#4B5563", fontSize: "0.95rem", lineHeight: 1.6 }}
-                                    dangerouslySetInnerHTML={{ __html: step.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#111111">$1</strong>').replace(/`(.*?)`/g, '<code style="background:#F3F4F6;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:0.85em;color:#165DFC">$1</code>') }}
+                                <li key={i} style={{ color: "#6B6B6B", fontSize: "0.95rem", lineHeight: 1.6 }}
+                                    dangerouslySetInnerHTML={{ __html: step.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#111111">$1</strong>').replace(/`(.*?)`/g, '<code style="background:#FAFAFA;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:0.85em;color:#165DFC">$1</code>') }}
                                 />
                             ))}
                         </ol>

@@ -64,7 +64,7 @@ export function AgentCard({ agent }: AgentCardProps) {
                     width: "80px",
                     height: "80px",
                     borderRadius: "14px",
-                    background: "linear-gradient(135deg, #FFFFFF 0%, #F3F4F6 100%)",
+                    background: "linear-gradient(135deg, #FFFFFF 0%, #FAFAFA 100%)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -84,7 +84,7 @@ export function AgentCard({ agent }: AgentCardProps) {
                         {agent.name}
                     </h3>
                     {agent.id.startsWith("example-") && (
-                        <span style={{ fontSize: "0.65rem", fontWeight: 700, background: "#F1F5F9", color: "#64748B", padding: "2px 6px", borderRadius: "4px", border: "1px solid #E2E8F0" }}>EXAMPLE</span>
+                        <span style={{ fontSize: "0.65rem", fontWeight: 700, background: "#FAFAFA", color: "#9CA3AF", padding: "2px 6px", borderRadius: "4px", border: "1px solid #E8E8E8" }}>EXAMPLE</span>
                     )}
                     {agent.status === "live" ? (
                         <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#0A7C4E", background: "rgba(10,124,78,0.1)", padding: "2px 8px", borderRadius: "12px", textTransform: "uppercase" }}>Live</span>
@@ -101,7 +101,7 @@ export function AgentCard({ agent }: AgentCardProps) {
                     <span style={{ fontSize: "0.85rem", color: "#165DFC", fontWeight: 600, background: "rgba(22,93,252,0.08)", padding: "4px 10px", borderRadius: "6px" }}>
                         {agent.pricePerDay} USDC/day
                     </span>
-                    <span style={{ color: "#D1D5DB" }}>•</span>
+                    <span style={{ color: "#E8E8E8" }}>•</span>
                     {agent.tags.slice(0, 3).map((tag) => (
                         <span key={tag} style={{ fontSize: "0.85rem", color: "#6B6B6B", background: "#FFFFFF", padding: "4px 10px", borderRadius: "6px", border: "1px solid #E8E8E8" }}>
                             {tag}
@@ -109,7 +109,7 @@ export function AgentCard({ agent }: AgentCardProps) {
                     ))}
                     {agent.roi > 0 && (
                         <>
-                            <span style={{ color: "#D1D5DB" }}>•</span>
+                            <span style={{ color: "#E8E8E8" }}>•</span>
                             <span style={{ fontSize: "0.85rem", color: "#0A7C4E", fontWeight: 600 }}>
                                 +{agent.roi}% ROI
                             </span>

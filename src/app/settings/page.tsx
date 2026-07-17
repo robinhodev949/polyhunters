@@ -77,9 +77,9 @@ export default function SettingsPage() {
 
     if (!isConnected) {
         return (
-            <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#FFFFFF" }}>
+            <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#FAFAFA" }}>
                 <div style={{ textAlign: "center", padding: "40px", background: "#FFFFFF", borderRadius: "16px", border: "1px solid #E8E8E8" }}>
-                    <SettingsIcon size={48} color="#D1D5DB" style={{ marginBottom: "16px" }} />
+                    <SettingsIcon size={48} color="#E8E8E8" style={{ marginBottom: "16px" }} />
                     <h2 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#111111", marginBottom: "8px" }}>Wallet Required</h2>
                     <p style={{ color: "#6B6B6B" }}>Please connect your EVM wallet to edit your profile settings.</p>
                 </div>
@@ -88,9 +88,9 @@ export default function SettingsPage() {
     }
 
     return (
-        <div style={{ minHeight: "100vh", background: "#FFFFFF", padding: "40px 24px" }}>
+        <div style={{ minHeight: "100vh", background: "#FAFAFA", padding: "40px 24px" }}>
             <div style={{ maxWidth: "600px", margin: "0 auto", background: "#FFFFFF", borderRadius: "16px", border: "1px solid #E8E8E8", overflow: "hidden" }}>
-                <div style={{ padding: "32px", borderBottom: "1px solid #E8E8E8", background: "#F9FAFB" }}>
+                <div style={{ padding: "32px", borderBottom: "1px solid #E8E8E8", background: "#FAFAFA" }}>
                     <h1 style={{ fontSize: "1.8rem", fontWeight: 700, margin: 0, color: "#111111", display: "flex", alignItems: "center", gap: "12px" }}>
                         <UserIcon size={28} color="#165DFC" />
                         Profile Settings
@@ -102,7 +102,7 @@ export default function SettingsPage() {
 
                 <form onSubmit={handleSave} style={{ padding: "32px", display: "flex", flexDirection: "column", gap: "24px" }}>
                     <div>
-                        <label style={{ display: "block", fontSize: "0.9rem", fontWeight: 600, color: "#4B5563", marginBottom: "8px" }}>
+                        <label style={{ display: "block", fontSize: "0.9rem", fontWeight: 600, color: "#6B6B6B", marginBottom: "8px" }}>
                             Username
                         </label>
                         <input
@@ -112,16 +112,16 @@ export default function SettingsPage() {
                             placeholder="e.g. polyhunter99"
                             maxLength={30}
                             style={{
-                                width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid #E5E7EB",
+                                width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid #E8E8E8",
                                 fontSize: "1rem", outline: "none", transition: "border-color 0.2s"
                             }}
                             onFocus={e => e.currentTarget.style.borderColor = "#165DFC"}
-                            onBlur={e => e.currentTarget.style.borderColor = "#E5E7EB"}
+                            onBlur={e => e.currentTarget.style.borderColor = "#E8E8E8"}
                         />
                     </div>
 
                     <div>
-                        <label style={{ display: "block", fontSize: "0.9rem", fontWeight: 600, color: "#4B5563", marginBottom: "8px" }}>
+                        <label style={{ display: "block", fontSize: "0.9rem", fontWeight: 600, color: "#6B6B6B", marginBottom: "8px" }}>
                             Avatar URL
                         </label>
                         <input
@@ -130,11 +130,11 @@ export default function SettingsPage() {
                             onChange={(e) => setAvatarUrl(e.target.value)}
                             placeholder="https://example.com/avatar.png"
                             style={{
-                                width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid #E5E7EB",
+                                width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid #E8E8E8",
                                 fontSize: "1rem", outline: "none", transition: "border-color 0.2s"
                             }}
                             onFocus={e => e.currentTarget.style.borderColor = "#165DFC"}
-                            onBlur={e => e.currentTarget.style.borderColor = "#E5E7EB"}
+                            onBlur={e => e.currentTarget.style.borderColor = "#E8E8E8"}
                         />
                         {avatarUrl && (
                             <div style={{ marginTop: "12px", display: "flex", alignItems: "center", gap: "12px" }}>
@@ -145,7 +145,7 @@ export default function SettingsPage() {
                     </div>
 
                     <div>
-                        <label style={{ display: "block", fontSize: "0.9rem", fontWeight: 600, color: "#4B5563", marginBottom: "8px" }}>
+                        <label style={{ display: "block", fontSize: "0.9rem", fontWeight: 600, color: "#6B6B6B", marginBottom: "8px" }}>
                             Bio
                         </label>
                         <textarea
@@ -155,11 +155,11 @@ export default function SettingsPage() {
                             rows={4}
                             maxLength={160}
                             style={{
-                                width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid #E5E7EB",
+                                width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid #E8E8E8",
                                 fontSize: "1rem", outline: "none", resize: "none", fontFamily: "inherit", transition: "border-color 0.2s"
                             }}
                             onFocus={e => e.currentTarget.style.borderColor = "#165DFC"}
-                            onBlur={e => e.currentTarget.style.borderColor = "#E5E7EB"}
+                            onBlur={e => e.currentTarget.style.borderColor = "#E8E8E8"}
                         />
                         <div style={{ textAlign: "right", fontSize: "0.8rem", color: "#9CA3AF", marginTop: "4px" }}>
                             {bio.length}/160

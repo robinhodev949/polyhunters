@@ -102,7 +102,7 @@ export function Navbar() {
                         textDecoration: "none", fontFamily: "Inter, sans-serif",
                         transition: "all 0.15s", whiteSpace: "nowrap",
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "#F9FAFB"; e.currentTarget.style.borderColor = "#D1D5DB"; }}
+                    onMouseEnter={e => { e.currentTarget.style.background = "#FAFAFA"; e.currentTarget.style.borderColor = "#E8E8E8"; }}
                     onMouseLeave={e => { e.currentTarget.style.background = "#FFFFFF"; e.currentTarget.style.borderColor = "#E8E8E8"; }}
                     >
                         Trade on Polymarket ↗
@@ -114,7 +114,7 @@ export function Navbar() {
                                 fontSize: "0.85rem",
                                 fontWeight: 600,
                                 color: "#000000",
-                                background: "#F3F4F6",
+                                background: "#FAFAFA",
                                 padding: "6px 12px",
                                 borderRadius: "6px",
                                 fontFamily: "monospace"
@@ -174,7 +174,7 @@ export function Navbar() {
                             fontSize: "0.75rem",
                             fontWeight: 600,
                             color: "#000000",
-                            background: "#F3F4F6",
+                            background: "#FAFAFA",
                             padding: "4px 8px",
                             borderRadius: "6px",
                             fontFamily: "monospace"
@@ -229,7 +229,7 @@ export function Navbar() {
                                 fontSize: "1rem", fontWeight: pathname === link.href ? 600 : 400,
                                 color: pathname === link.href ? "#000000" : "#6B6B6B",
                                 fontFamily: "Inter, sans-serif",
-                                borderBottom: "1px solid #F5F5F5",
+                                borderBottom: "1px solid #FAFAFA",
                                 display: "block",
                             }}
                         >
@@ -244,7 +244,7 @@ export function Navbar() {
                             fontSize: "1rem", fontWeight: pathname === "/privacy-policy" ? 600 : 400,
                             color: pathname === "/privacy-policy" ? "#000000" : "#6B6B6B",
                             fontFamily: "Inter, sans-serif",
-                            borderBottom: "1px solid #F5F5F5",
+                            borderBottom: "1px solid #FAFAFA",
                             display: "block",
                         }}
                     >
@@ -253,7 +253,7 @@ export function Navbar() {
                     {isConnected && address && (
                         <Link href={`/profile/${address}`} onClick={() => setMenuOpen(false)} style={{
                             textDecoration: "none", padding: "14px 20px", fontSize: "1rem", fontWeight: 600, color: "#165DFC",
-                            fontFamily: "Inter, sans-serif", borderBottom: "1px solid #F5F5F5", display: "block"
+                            fontFamily: "Inter, sans-serif", borderBottom: "1px solid #FAFAFA", display: "block"
                         }}>My Profile</Link>
                     )}
                     {isConnected && (
@@ -262,7 +262,7 @@ export function Navbar() {
                             style={{
                                 width: "100%", textAlign: "left", background: "none", border: "none",
                                 textDecoration: "none", padding: "14px 20px", fontSize: "1rem", fontWeight: 600, color: "#EF4444",
-                                fontFamily: "Inter, sans-serif", borderBottom: "1px solid #F5F5F5", display: "block", cursor: "pointer"
+                                fontFamily: "Inter, sans-serif", borderBottom: "1px solid #FAFAFA", display: "block", cursor: "pointer"
                             }}
                         >
                             Disconnect Wallet

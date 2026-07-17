@@ -5,7 +5,7 @@ import { ArrowRight, Wallet, Shield, CheckCircle, Activity, Box, Lock, Cpu } fro
 
 export default function Home() {
   return (
-    <div style={{ background: "#FFFFFF", color: "#111111", minHeight: "100vh", fontFamily: "var(--font-sans)", overflowX: "hidden" }}>
+    <div style={{ background: "#FAFAFA", color: "#111111", minHeight: "100vh", fontFamily: "var(--font-sans)", overflowX: "hidden" }}>
 
       {/* ── Top Header Variant ── */}
       <div className="landing-top-header" style={{ maxWidth: "1200px", margin: "0 auto", padding: "40px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -38,7 +38,7 @@ export default function Home() {
         {/* Grid pattern */}
         <div style={{
           position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
-          backgroundImage: "linear-gradient(#f0f0f0 1px, transparent 1px), linear-gradient(90deg, #f0f0f0 1px, transparent 1px)",
+          backgroundImage: "linear-gradient(#FAFAFA 1px, transparent 1px), linear-gradient(90deg, #FAFAFA 1px, transparent 1px)",
           backgroundSize: "32px 32px", opacity: 0.4, pointerEvents: "none", zIndex: 0
         }} />
 
@@ -88,7 +88,7 @@ export default function Home() {
                 fontWeight: 600, cursor: "pointer", fontFamily: "Inter, sans-serif",
                 display: "inline-flex", alignItems: "center", gap: "8px", transition: "all 0.15s"
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#F9FAFB"; e.currentTarget.style.borderColor = "#D1D5DB"; }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#FAFAFA"; e.currentTarget.style.borderColor = "#E8E8E8"; }}
               onMouseLeave={e => { e.currentTarget.style.background = "#FFFFFF"; e.currentTarget.style.borderColor = "#E8E8E8"; }}
               >
                 Submit Your Agent

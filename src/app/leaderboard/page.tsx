@@ -32,7 +32,7 @@ export default function LeaderboardPage() {
     }, [activeTab]);
 
     return (
-        <div style={{ minHeight: "100vh", background: "#FFFFFF", padding: "40px 24px" }}>
+        <div style={{ minHeight: "100vh", background: "#FAFAFA", padding: "40px 24px" }}>
             <div style={{ maxWidth: "860px", margin: "0 auto" }}>
                 
                 {/* Header */}
@@ -94,9 +94,9 @@ export default function LeaderboardPage() {
                                 <div key={agent.id} style={{ position: "relative" }}>
                                     <div style={{ position: "absolute", left: "-20px", top: "50%", transform: "translateY(-50%)", zIndex: 10 }}>
                                         {index === 0 && <Crown size={32} color="#FBBF24" fill="#FBBF24" style={{ filter: "drop-shadow(0 2px 4px rgba(251,191,36,0.3))" }} />}
-                                        {index === 1 && <Medal size={28} color="#9CA3AF" fill="#E5E7EB" style={{ filter: "drop-shadow(0 2px 4px rgba(156,163,175,0.3))" }} />}
+                                        {index === 1 && <Medal size={28} color="#9CA3AF" fill="#E8E8E8" style={{ filter: "drop-shadow(0 2px 4px rgba(156,163,175,0.3))" }} />}
                                         {index === 2 && <Award size={28} color="#D97706" fill="#FDE68A" style={{ filter: "drop-shadow(0 2px 4px rgba(217,119,6,0.3))" }} />}
-                                        {index > 2 && <div style={{ width: "24px", height: "24px", background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 700, color: "#9CA3AF", boxShadow: "0 2px 4px rgba(0,0,0,0.05)" }}>{index + 1}</div>}
+                                        {index > 2 && <div style={{ width: "24px", height: "24px", background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 700, color: "#9CA3AF", boxShadow: "0 2px 4px rgba(0,0,0,0.05)" }}>{index + 1}</div>}
                                     </div>
                                     <AgentCard agent={agent} />
                                 </div>
@@ -117,18 +117,18 @@ export default function LeaderboardPage() {
                                         borderBottom: index !== hunters.length - 1 ? "1px solid #E8E8E8" : "none",
                                         transition: "background 0.15s", cursor: "pointer"
                                     }}
-                                    onMouseEnter={e => e.currentTarget.style.backgroundColor = "#F9FAFB"}
+                                    onMouseEnter={e => e.currentTarget.style.backgroundColor = "#FAFAFA"}
                                     onMouseLeave={e => e.currentTarget.style.backgroundColor = "transparent"}
                                     >
                                         <div style={{ width: "40px", fontSize: "1.2rem", fontWeight: 700, color: index < 3 ? "#111111" : "#9CA3AF" }}>
                                             #{index + 1}
                                         </div>
                                         
-                                        <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "#F3F4F6", overflow: "hidden", marginRight: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                        <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "#FAFAFA", overflow: "hidden", marginRight: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                                             {hunter.avatarUrl ? (
                                                 <img src={hunter.avatarUrl} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                                             ) : (
-                                                <UserIcon size={24} color="#D1D5DB" />
+                                                <UserIcon size={24} color="#E8E8E8" />
                                             )}
                                         </div>
                                         

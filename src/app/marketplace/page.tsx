@@ -83,7 +83,7 @@ export default function MarketplacePage() {
     });
 
     return (
-        <div style={{ background: "#FFFFFF", minHeight: "calc(100vh - 56px)" }}>
+        <div style={{ background: "#FAFAFA", minHeight: "calc(100vh - 56px)" }}>
             
             {/* Header Section */}
             <div style={{ background: "#FFFFFF", borderBottom: "1px solid #E8E8E8", padding: "48px 32px 32px" }}>
