@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { verifyMessage, getAddress, isAddress } from "viem";
-import { v4 as uuidv4 } from "uuid";
 
 export async function POST(req: Request) {
     try {
@@ -43,7 +42,7 @@ export async function POST(req: Request) {
         // Convert file to buffer for Supabase
         const buffer = await file.arrayBuffer();
         const fileExt = file.name.split('.').pop() || 'png';
-        const fileName = `${normalizedWallet}-${uuidv4()}.${fileExt}`;
+        const fileName = `${normalizedWallet}-${crypto.randomUUID()}.${fileExt}`;
 
         // Upload to Supabase Storage 'avatars' bucket
         const { data, error } = await supabase.storage
