@@ -23,7 +23,6 @@ export function Navbar() {
     ];
 
     const handleConnect = () => {
-        // Use injected connector (MetaMask, Phantom EVM, Rabby, etc.)
         const injectedConnector = connectors.find(c => c.id === 'injected') || connectors[0];
         if (injectedConnector) {
             connect({ connector: injectedConnector });
@@ -36,40 +35,24 @@ export function Navbar() {
 
     return (
         <>
-            <header style={{
-                position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
-                height: "56px",
-                backgroundColor: "#FFFFFF",
-                borderBottom: "1px solid #E8E8E8",
-                display: "flex", alignItems: "center",
-                justifyContent: "space-between",
-                padding: "0 16px",
-            }}>
+            <header className="fixed top-0 left-0 right-0 z-50 h-[56px] bg-bg-secondary border-b border-border flex items-center justify-between px-4">
                 {/* Logo */}
-                <Link href="/" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none" }}>
-                    <img src="/logo.png" alt="PolyHunt Logo" style={{ width: "28px", height: "28px", borderRadius: "10%" }} />
-                    <span style={{
-                        fontWeight: 700, fontSize: "1rem", color: "#000000",
-                        fontFamily: "Inter, sans-serif", letterSpacing: "-0.02em"
-                    }}>
+                <Link href="/" className="flex items-center gap-2 no-underline">
+                    <img src="/logo.png" alt="PolyHunt Logo" className="w-7 h-7 rounded-sm" />
+                    <span className="font-bold text-[1rem] text-text-primary font-sans tracking-tight">
                         PolyHunt
                     </span>
                 </Link>
 
                 {/* Desktop Nav links */}
-                <nav className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+                <nav className="desktop-nav flex items-center gap-6">
                     {navLinks.map(link => (
                         <Link
                             key={link.href}
                             href={link.href}
-                            style={{
-                                textDecoration: "none",
-                                fontSize: "0.875rem",
-                                fontWeight: pathname === link.href ? 600 : 400,
-                                color: pathname === link.href ? "#000000" : "#6B6B6B",
-                                fontFamily: "Inter, sans-serif",
-                                transition: "color 0.1s",
-                            }}
+                            className={`no-underline text-[0.875rem] font-sans transition-colors duration-100 ${
+                                pathname === link.href ? "font-semibold text-text-primary" : "font-normal text-text-secondary hover:text-text-primary"
+                            }`}
                         >
                             {link.label}
                         </Link>
@@ -77,65 +60,26 @@ export function Navbar() {
                 </nav>
 
                 {/* Desktop: Wallet + Trade button */}
-                <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div className="desktop-nav flex items-center gap-3">
                     {isConnected && address && (
-                        <div style={{ display: "flex", alignItems: "center", gap: "16px", marginRight: "8px", borderRight: "1px solid #E8E8E8", paddingRight: "20px" }}>
-                            <Link href={`/profile/${address}`} style={{ 
-                                textDecoration: "none", 
-                                fontSize: "0.85rem", 
-                                fontWeight: 600, 
-                                color: "#165DFC",
-                                transition: "color 0.15s"
-                            }}
-                            onMouseEnter={e => e.currentTarget.style.color = "#0047ca"}
-                            onMouseLeave={e => e.currentTarget.style.color = "#165DFC"}
-                            >
+                        <div className="flex items-center gap-4 mr-2 border-r border-border pr-5">
+                            <Link href={`/profile/${address}`} className="no-underline text-[0.85rem] font-semibold text-brand hover:text-brand-dark transition-colors duration-150">
                                 My Profile
                             </Link>
                         </div>
                     )}
-                    <a href="https://polymarket.com" target="_blank" rel="noopener noreferrer" className="nav-trade-btn" style={{
-                        display: "inline-flex", alignItems: "center", gap: "6px",
-                        padding: "7px 14px", borderRadius: "6px",
-                        border: "1px solid #E8E8E8", background: "#FFFFFF",
-                        color: "#000000", fontSize: "0.8rem", fontWeight: 600,
-                        textDecoration: "none", fontFamily: "Inter, sans-serif",
-                        transition: "all 0.15s", whiteSpace: "nowrap",
-                    }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "#F9FAFB"; e.currentTarget.style.borderColor = "#D1D5DB"; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "#FFFFFF"; e.currentTarget.style.borderColor = "#E8E8E8"; }}
-                    >
+                    <a href="https://polymarket.com" target="_blank" rel="noopener noreferrer" className="nav-trade-btn inline-flex items-center gap-1.5 px-3.5 py-1.75 rounded-md border border-border bg-bg-secondary text-text-primary text-[0.8rem] font-semibold no-underline font-sans transition-all duration-150 whitespace-nowrap hover:bg-bg-primary hover:border-text-muted">
                         Trade on Polymarket ↗
                     </a>
                     
                     {isConnected && address ? (
-                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                            <span style={{
-                                fontSize: "0.85rem",
-                                fontWeight: 600,
-                                color: "#000000",
-                                background: "#F3F4F6",
-                                padding: "6px 12px",
-                                borderRadius: "6px",
-                                fontFamily: "monospace"
-                            }}>
+                        <div className="flex items-center gap-2">
+                            <span className="text-[0.85rem] font-semibold text-text-primary bg-bg-primary px-3 py-1.5 rounded-md font-mono">
                                 {formatAddress(address)}
                             </span>
                             <button 
                                 onClick={() => disconnect()}
-                                style={{
-                                    background: "#FFFFFF",
-                                    border: "1px solid #E8E8E8",
-                                    borderRadius: "6px",
-                                    padding: "6px 10px",
-                                    cursor: "pointer",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    color: "#6B6B6B",
-                                    transition: "all 0.15s"
-                                }}
-                                onMouseEnter={e => { e.currentTarget.style.borderColor = "#EF4444"; e.currentTarget.style.color = "#EF4444"; }}
-                                onMouseLeave={e => { e.currentTarget.style.borderColor = "#E8E8E8"; e.currentTarget.style.color = "#6B6B6B"; }}
+                                className="bg-bg-secondary border border-border rounded-md px-2.5 py-1.5 cursor-pointer flex items-center text-text-secondary transition-all duration-150 hover:border-error hover:text-error"
                             >
                                 <LogOut size={14} />
                             </button>
@@ -143,23 +87,7 @@ export function Navbar() {
                     ) : (
                         <button
                             onClick={handleConnect}
-                            style={{
-                                background: "#CCFF00",
-                                color: "#000000",
-                                border: "none",
-                                borderRadius: "6px",
-                                padding: "7px 16px",
-                                fontSize: "0.85rem",
-                                fontWeight: 600,
-                                cursor: "pointer",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "6px",
-                                transition: "all 0.15s",
-                                boxShadow: "0 2px 8px rgba(204,255,0,0.15)"
-                            }}
-                            onMouseEnter={e => { e.currentTarget.style.background = "#bfe600"; e.currentTarget.style.transform = "translateY(-1px)"; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = "#CCFF00"; e.currentTarget.style.transform = "translateY(0)"; }}
+                            className="bg-brand-lime text-text-primary border-none rounded-md px-4 py-1.75 text-[0.85rem] font-semibold cursor-pointer flex items-center gap-1.5 transition-all duration-150 shadow-[0_2px_8px_rgba(204,255,0,0.15)] hover:bg-[#bfe600] hover:-translate-y-0.5"
                         >
                             <Wallet size={14} />
                             Connect Wallet
@@ -168,42 +96,22 @@ export function Navbar() {
                 </div>
 
                 {/* Mobile: Wallet + Hamburger */}
-                <div className="mobile-nav" style={{ display: "none", alignItems: "center", gap: "8px" }}>
+                <div className="mobile-nav hidden items-center gap-2">
                     {isConnected && address ? (
-                        <span style={{
-                            fontSize: "0.75rem",
-                            fontWeight: 600,
-                            color: "#000000",
-                            background: "#F3F4F6",
-                            padding: "4px 8px",
-                            borderRadius: "6px",
-                            fontFamily: "monospace"
-                        }}>
+                        <span className="text-[0.75rem] font-semibold text-text-primary bg-bg-primary px-2 py-1 rounded-md font-mono">
                             {formatAddress(address)}
                         </span>
                     ) : (
                         <button
                             onClick={handleConnect}
-                            style={{
-                                background: "#CCFF00",
-                                color: "#000000",
-                                border: "none",
-                                borderRadius: "6px",
-                                padding: "5px 10px",
-                                fontSize: "0.75rem",
-                                fontWeight: 600,
-                                cursor: "pointer",
-                                transition: "background 0.15s"
-                            }}
-                            onMouseEnter={e => e.currentTarget.style.background = "#bfe600"}
-                            onMouseLeave={e => e.currentTarget.style.background = "#CCFF00"}
+                            className="bg-brand-lime text-text-primary border-none rounded-md px-2.5 py-1.25 text-[0.75rem] font-semibold cursor-pointer transition-colors duration-150 hover:bg-[#bfe600]"
                         >
                             Connect
                         </button>
                     )}
                     <button
                         onClick={() => setMenuOpen(!menuOpen)}
-                        style={{ background: "none", border: "none", cursor: "pointer", padding: "4px", color: "#000000" }}
+                        className="bg-transparent border-none cursor-pointer p-1 text-text-primary"
                     >
                         {menuOpen ? <X size={22} /> : <Menu size={22} />}
                     </button>
@@ -212,26 +120,15 @@ export function Navbar() {
 
             {/* Mobile Dropdown Menu */}
             {menuOpen && (
-                <div className="mobile-nav" style={{
-                    display: "none",
-                    position: "fixed", top: "56px", left: 0, right: 0, zIndex: 49,
-                    backgroundColor: "#FFFFFF", borderBottom: "1px solid #E8E8E8",
-                    flexDirection: "column", padding: "8px 0",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.08)"
-                }}>
+                <div className="mobile-nav hidden fixed top-[56px] left-0 right-0 z-49 bg-bg-secondary border-b border-border flex-col py-2 shadow-md">
                     {navLinks.map(link => (
                         <Link
                             key={link.href}
                             href={link.href}
                             onClick={() => setMenuOpen(false)}
-                            style={{
-                                textDecoration: "none", padding: "14px 20px",
-                                fontSize: "1rem", fontWeight: pathname === link.href ? 600 : 400,
-                                color: pathname === link.href ? "#000000" : "#6B6B6B",
-                                fontFamily: "Inter, sans-serif",
-                                borderBottom: "1px solid #F5F5F5",
-                                display: "block",
-                            }}
+                            className={`no-underline px-5 py-3.5 text-[1rem] font-sans border-b border-border block ${
+                                pathname === link.href ? "font-semibold text-text-primary" : "font-normal text-text-secondary"
+                            }`}
                         >
                             {link.label}
                         </Link>
@@ -239,40 +136,24 @@ export function Navbar() {
                     <Link
                         href="/privacy-policy"
                         onClick={() => setMenuOpen(false)}
-                        style={{
-                            textDecoration: "none", padding: "14px 20px",
-                            fontSize: "1rem", fontWeight: pathname === "/privacy-policy" ? 600 : 400,
-                            color: pathname === "/privacy-policy" ? "#000000" : "#6B6B6B",
-                            fontFamily: "Inter, sans-serif",
-                            borderBottom: "1px solid #F5F5F5",
-                            display: "block",
-                        }}
+                        className={`no-underline px-5 py-3.5 text-[1rem] font-sans border-b border-border block ${
+                            pathname === "/privacy-policy" ? "font-semibold text-text-primary" : "font-normal text-text-secondary"
+                        }`}
                     >
                         Privacy Policy
                     </Link>
                     {isConnected && address && (
-                        <Link href={`/profile/${address}`} onClick={() => setMenuOpen(false)} style={{
-                            textDecoration: "none", padding: "14px 20px", fontSize: "1rem", fontWeight: 600, color: "#165DFC",
-                            fontFamily: "Inter, sans-serif", borderBottom: "1px solid #F5F5F5", display: "block"
-                        }}>My Profile</Link>
+                        <Link href={`/profile/${address}`} onClick={() => setMenuOpen(false)} className="no-underline px-5 py-3.5 text-[1rem] font-semibold text-brand font-sans border-b border-border block">My Profile</Link>
                     )}
                     {isConnected && (
                         <button 
                             onClick={() => { disconnect(); setMenuOpen(false); }}
-                            style={{
-                                width: "100%", textAlign: "left", background: "none", border: "none",
-                                textDecoration: "none", padding: "14px 20px", fontSize: "1rem", fontWeight: 600, color: "#EF4444",
-                                fontFamily: "Inter, sans-serif", borderBottom: "1px solid #F5F5F5", display: "block", cursor: "pointer"
-                            }}
+                            className="w-full text-left bg-transparent border-none no-underline px-5 py-3.5 text-[1rem] font-semibold text-error font-sans border-b border-border block cursor-pointer"
                         >
                             Disconnect Wallet
                         </button>
                     )}
-                    <a href="https://polymarket.com" target="_blank" rel="noopener noreferrer" style={{
-                        padding: "14px 20px", fontSize: "1rem", fontWeight: 500,
-                        color: "#6B6B6B", fontFamily: "Inter, sans-serif",
-                        textDecoration: "none", display: "block"
-                    }}>
+                    <a href="https://polymarket.com" target="_blank" rel="noopener noreferrer" className="px-5 py-3.5 text-[1rem] font-medium text-text-secondary font-sans no-underline block">
                         Trade on Polymarket ↗
                     </a>
                 </div>

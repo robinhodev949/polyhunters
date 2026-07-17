@@ -77,32 +77,32 @@ export default function SettingsPage() {
 
     if (!isConnected) {
         return (
-            <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#FFFFFF" }}>
-                <div style={{ textAlign: "center", padding: "40px", background: "#FFFFFF", borderRadius: "16px", border: "1px solid #E8E8E8" }}>
-                    <SettingsIcon size={48} color="#D1D5DB" style={{ marginBottom: "16px" }} />
-                    <h2 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#111111", marginBottom: "8px" }}>Wallet Required</h2>
-                    <p style={{ color: "#6B6B6B" }}>Please connect your EVM wallet to edit your profile settings.</p>
+            <div className="min-h-[60vh] flex items-center justify-center bg-bg-secondary">
+                <div className="text-center p-10 bg-bg-secondary rounded-2xl border border-border shadow-sm">
+                    <SettingsIcon size={48} className="text-text-muted mb-4 mx-auto" />
+                    <h2 className="text-[1.5rem] font-bold text-text-primary mb-2">Wallet Required</h2>
+                    <p className="text-text-secondary">Please connect your EVM wallet to edit your profile settings.</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div style={{ minHeight: "100vh", background: "#FFFFFF", padding: "40px 24px" }}>
-            <div style={{ maxWidth: "600px", margin: "0 auto", background: "#FFFFFF", borderRadius: "16px", border: "1px solid #E8E8E8", overflow: "hidden" }}>
-                <div style={{ padding: "32px", borderBottom: "1px solid #E8E8E8", background: "#F9FAFB" }}>
-                    <h1 style={{ fontSize: "1.8rem", fontWeight: 700, margin: 0, color: "#111111", display: "flex", alignItems: "center", gap: "12px" }}>
-                        <UserIcon size={28} color="#165DFC" />
+        <div className="min-h-screen bg-bg-secondary py-10 px-6">
+            <div className="max-w-[600px] mx-auto bg-bg-secondary rounded-2xl border border-border overflow-hidden shadow-sm">
+                <div className="p-8 border-b border-border bg-bg-primary">
+                    <h1 className="text-[1.8rem] font-bold m-0 text-text-primary flex items-center gap-3">
+                        <UserIcon size={28} className="text-brand" />
                         Profile Settings
                     </h1>
-                    <p style={{ color: "#6B6B6B", margin: "8px 0 0 0", fontSize: "0.95rem" }}>
+                    <p className="text-text-secondary m-0 mt-2 text-[0.95rem]">
                         Setup your Polyhunter identity to appear on leaderboards and agent pages.
                     </p>
                 </div>
 
-                <form onSubmit={handleSave} style={{ padding: "32px", display: "flex", flexDirection: "column", gap: "24px" }}>
+                <form onSubmit={handleSave} className="p-8 flex flex-col gap-6">
                     <div>
-                        <label style={{ display: "block", fontSize: "0.9rem", fontWeight: 600, color: "#4B5563", marginBottom: "8px" }}>
+                        <label className="block text-[0.9rem] font-bold text-text-secondary mb-2">
                             Username
                         </label>
                         <input
@@ -111,17 +111,12 @@ export default function SettingsPage() {
                             onChange={(e) => setUsername(e.target.value)}
                             placeholder="e.g. polyhunter99"
                             maxLength={30}
-                            style={{
-                                width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid #E5E7EB",
-                                fontSize: "1rem", outline: "none", transition: "border-color 0.2s"
-                            }}
-                            onFocus={e => e.currentTarget.style.borderColor = "#165DFC"}
-                            onBlur={e => e.currentTarget.style.borderColor = "#E5E7EB"}
+                            className="w-full px-4 py-3 rounded-lg border border-border text-[1rem] outline-none transition-colors duration-200 focus:border-brand"
                         />
                     </div>
 
                     <div>
-                        <label style={{ display: "block", fontSize: "0.9rem", fontWeight: 600, color: "#4B5563", marginBottom: "8px" }}>
+                        <label className="block text-[0.9rem] font-bold text-text-secondary mb-2">
                             Avatar URL
                         </label>
                         <input
@@ -129,23 +124,18 @@ export default function SettingsPage() {
                             value={avatarUrl}
                             onChange={(e) => setAvatarUrl(e.target.value)}
                             placeholder="https://example.com/avatar.png"
-                            style={{
-                                width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid #E5E7EB",
-                                fontSize: "1rem", outline: "none", transition: "border-color 0.2s"
-                            }}
-                            onFocus={e => e.currentTarget.style.borderColor = "#165DFC"}
-                            onBlur={e => e.currentTarget.style.borderColor = "#E5E7EB"}
+                            className="w-full px-4 py-3 rounded-lg border border-border text-[1rem] outline-none transition-colors duration-200 focus:border-brand"
                         />
                         {avatarUrl && (
-                            <div style={{ marginTop: "12px", display: "flex", alignItems: "center", gap: "12px" }}>
-                                <img src={avatarUrl} alt="Avatar preview" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: "1px solid #E8E8E8" }} onError={(e) => (e.currentTarget.style.display = 'none')} />
-                                <span style={{ fontSize: "0.8rem", color: "#9CA3AF" }}>Preview</span>
+                            <div className="mt-3 flex items-center gap-3">
+                                <img src={avatarUrl} alt="Avatar preview" className="w-12 h-12 rounded-full object-cover border border-border" onError={(e) => (e.currentTarget.style.display = 'none')} />
+                                <span className="text-[0.8rem] text-text-muted">Preview</span>
                             </div>
                         )}
                     </div>
 
                     <div>
-                        <label style={{ display: "block", fontSize: "0.9rem", fontWeight: 600, color: "#4B5563", marginBottom: "8px" }}>
+                        <label className="block text-[0.9rem] font-bold text-text-secondary mb-2">
                             Bio
                         </label>
                         <textarea
@@ -154,33 +144,25 @@ export default function SettingsPage() {
                             placeholder="Tell the community about yourself..."
                             rows={4}
                             maxLength={160}
-                            style={{
-                                width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid #E5E7EB",
-                                fontSize: "1rem", outline: "none", resize: "none", fontFamily: "inherit", transition: "border-color 0.2s"
-                            }}
-                            onFocus={e => e.currentTarget.style.borderColor = "#165DFC"}
-                            onBlur={e => e.currentTarget.style.borderColor = "#E5E7EB"}
+                            className="w-full px-4 py-3 rounded-lg border border-border text-[1rem] outline-none resize-none font-sans transition-colors duration-200 focus:border-brand"
                         />
-                        <div style={{ textAlign: "right", fontSize: "0.8rem", color: "#9CA3AF", marginTop: "4px" }}>
+                        <div className="text-right text-[0.8rem] text-text-muted mt-1">
                             {bio.length}/160
                         </div>
                     </div>
 
-                    <div style={{ borderTop: "1px solid #E8E8E8", paddingTop: "24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                        <span style={{ fontSize: "0.9rem", color: status.includes("Error") || status.includes("failed") ? "#DC2626" : "#059669", fontWeight: 500 }}>
+                    <div className="border-t border-border pt-6 flex items-center justify-between">
+                        <span className={`text-[0.9rem] font-medium ${status.toLowerCase().includes("error") || status.toLowerCase().includes("failed") ? "text-error" : "text-success"}`}>
                             {status}
                         </span>
                         <button
                             type="submit"
                             disabled={loading}
-                            style={{
-                                background: loading ? "#9CA3AF" : "#CCFF00",
-                                color: "#000000", border: "none", borderRadius: "8px", padding: "12px 24px",
-                                fontSize: "0.95rem", fontWeight: 700, display: "flex", alignItems: "center", gap: "8px",
-                                cursor: loading ? "not-allowed" : "pointer", transition: "background 0.15s"
-                            }}
-                            onMouseEnter={e => { if (!loading) e.currentTarget.style.background = "#bfe600"; }}
-                            onMouseLeave={e => { if (!loading) e.currentTarget.style.background = "#CCFF00"; }}
+                            className={`border-none rounded-lg px-6 py-3 text-[0.95rem] font-bold flex items-center gap-2 transition-colors duration-150 ${
+                                loading 
+                                    ? "bg-text-muted text-text-primary cursor-not-allowed" 
+                                    : "bg-brand-lime text-text-primary cursor-pointer hover:bg-[#bfe600]"
+                            }`}
                         >
                             <Save size={18} />
                             {loading ? "Saving..." : "Save Profile"}

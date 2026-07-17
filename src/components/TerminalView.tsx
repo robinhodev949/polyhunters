@@ -64,42 +64,27 @@ export function TerminalView({ agent, onStop }: TerminalViewProps) {
     }, [logs]);
 
     return (
-        <div style={{
-            background: "#0A0A0A",
-            borderRadius: "12px",
-            border: "1px solid #262626",
-            overflow: "hidden",
-            display: "flex",
-            flexDirection: "column",
-            height: "450px"
-        }}>
+        <div className="bg-neutral-950 rounded-xl border border-neutral-800 overflow-hidden flex flex-col h-[450px]">
             {/* Terminal Header */}
-            <div style={{
-                background: "#171717",
-                padding: "12px 16px",
-                borderBottom: "1px solid #262626",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between"
-            }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                    <div style={{ display: "flex", gap: "6px" }}>
-                        <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: "#EF4444" }}></div>
-                        <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: "#EAB308" }}></div>
-                        <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: "#22C55E" }}></div>
+            <div className="bg-neutral-900 px-4 py-3 border-b border-neutral-800 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <div className="flex gap-1.5">
+                        <div className="w-3 h-3 rounded-full bg-error"></div>
+                        <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div className="w-3 h-3 rounded-full bg-success"></div>
                     </div>
-                    <div style={{ color: "#A3A3A3", fontSize: "0.85rem", fontFamily: "monospace", display: "flex", alignItems: "center", gap: "6px" }}>
+                    <div className="text-neutral-400 text-[0.85rem] font-mono flex items-center gap-1.5">
                         <Terminal size={14} /> OpenClaw Shell — {agent.name} <span className="cursor-blink">_</span>
                     </div>
                 </div>
-                <div style={{ display: "flex", gap: "10px" }}>
-                    <button style={{ background: "transparent", border: "none", color: "#A3A3A3", cursor: "pointer" }}><Settings size={14} /></button>
+                <div className="flex gap-2.5">
+                    <button className="bg-transparent border-none text-neutral-400 cursor-pointer"><Settings size={14} /></button>
                     <button
                         onClick={() => {
                             if ((window as any).__simInterval) clearInterval((window as any).__simInterval);
                             onStop();
                         }}
-                        style={{ display: "flex", alignItems: "center", gap: "4px", background: "rgba(239, 68, 68, 0.1)", color: "#EF4444", border: "1px solid rgba(239, 68, 68, 0.2)", borderRadius: "4px", padding: "4px 8px", fontSize: "0.75rem", cursor: "pointer" }}
+                        className="flex items-center gap-1 bg-error/10 text-error border border-error/20 rounded px-2 py-1 text-[0.75rem] cursor-pointer"
                     >
                         <Power size={12} /> Stop Node
                     </button>
@@ -109,19 +94,10 @@ export function TerminalView({ agent, onStop }: TerminalViewProps) {
             {/* Terminal Body */}
             <div
                 ref={scrollRef}
-                className="terminal-scroll"
-                style={{
-                    flex: 1,
-                    padding: "16px",
-                    overflowY: "auto",
-                    fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
-                    fontSize: "0.85rem",
-                    lineHeight: "1.6",
-                    color: "#D4D4D8"
-                }}
+                className="terminal-scroll flex-1 p-4 overflow-y-auto font-mono text-[0.85rem] leading-relaxed text-neutral-300"
             >
                 {logs.map((log, index) => (
-                    <div key={index} dangerouslySetInnerHTML={{ __html: log }} style={{ marginBottom: "4px" }} />
+                    <div key={index} dangerouslySetInnerHTML={{ __html: log }} className="mb-1" />
                 ))}
             </div>
         </div>

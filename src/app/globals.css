@@ -3,15 +3,15 @@
 
 /* ── Design Tokens ────────────────────────────────────────── */
 :root {
-  --brand:        #3358FF;   /* PolyHunt blue */
-  --brand-dark:   #2244DD;
-  --brand-light:  #5B7AFF;
-  --blue:         #3358FF;
+  --brand:        #165DFC;   /* PolyHunt blue */
+  --brand-dark:   #0047ca;
+  --accent-lime:  #CCFF00;
   --success:      #0A7C4E;
+  --error:        #EF4444;
   --border:       #E8E8E8;
-  --text-primary: #1A1A1A;
+  --text-primary: #111111;
   --text-secondary: #6B6B6B;
-  --text-muted:   #ABABAB;
+  --text-muted:   #9CA3AF;
   --bg:           #FAFAFA;
   --bg-card:      #FFFFFF;
   --radius:       8px;
@@ -132,8 +132,8 @@ h1, h2, h3, h4, h5, h6 {
   outline: none;
 }
 .input-base:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(51, 88, 255, 0.10);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(22, 93, 252, 0.10);
 }
 
 /* ── Card ───────────────────────────────────────────────── */

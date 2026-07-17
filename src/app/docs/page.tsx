@@ -1,12 +1,12 @@
 "use client";
 
-import { ChevronRight, BookOpen, Terminal, Upload, Wallet, Zap, Code, ExternalLink } from "lucide-react";
+import { BookOpen, Terminal, Upload, Wallet, Zap, Code, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 const sections = [
     {
         id: "getting-started",
-        icon: <Zap size={22} color="#165DFC" />,
+        icon: <Zap size={22} className="text-brand" />,
         title: "Getting Started",
         content: [
             "Connect your EVM wallet (MetaMask, Rabby, Phantom) using the button in the top-right corner.",
@@ -17,7 +17,7 @@ const sections = [
     },
     {
         id: "list-your-agent",
-        icon: <Upload size={22} color="#165DFC" />,
+        icon: <Upload size={22} className="text-brand" />,
         title: "How to List Your Agent",
         content: [
             "Package your agent as a Docker image and push to a public registry (e.g. Docker Hub). It must connect to prediction markets using their official APIs.",
@@ -29,7 +29,7 @@ const sections = [
     },
     {
         id: "openclaw-setup",
-        icon: <Terminal size={22} color="#165DFC" />,
+        icon: <Terminal size={22} className="text-brand" />,
         title: "OpenClaw Agent Setup",
         content: [
             "Install the OpenClaw SDK: `npm install @openclaw/sdk`",
@@ -41,7 +41,7 @@ const sections = [
     },
     {
         id: "api",
-        icon: <Code size={22} color="#165DFC" />,
+        icon: <Code size={22} className="text-brand" />,
         title: "API Reference",
         content: [
             "`GET /api/agents` — Returns all active agents in the marketplace.",
@@ -53,7 +53,7 @@ const sections = [
     },
     {
         id: "roadmap",
-        icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#165DFC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>,
+        icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>,
         title: "Roadmap — Coming Soon",
         content: [
             "**Telegram Bot** — @polyhunt_bot: Link your EVM wallet, check agent P&L, and send `/stop` commands from Telegram.",
@@ -66,63 +66,57 @@ const sections = [
 
 export default function DocsPage() {
     return (
-        <div style={{ maxWidth: "900px", margin: "0 auto", padding: "100px 24px 80px", color: "#111111", background: "#FFFFFF" }}>
+        <div className="max-w-[900px] mx-auto py-25 px-6 pb-20 text-text-primary bg-bg-secondary">
 
             {/* Header */}
-            <div style={{ marginBottom: "60px" }}>
-                <h1 style={{ fontSize: "2.8rem", fontWeight: 700, color: "#111111", margin: "0 0 16px 0", fontFamily: "Outfit, sans-serif" }}>
-                    <BookOpen size={28} style={{ verticalAlign: "middle", marginRight: "12px", color: "#165DFC" }} />
+            <div className="mb-15">
+                <h1 className="text-[2.8rem] font-bold m-0 mb-4 font-sans tracking-tight flex items-center gap-3">
+                    <BookOpen size={28} className="text-brand" />
                     Documentation
                 </h1>
-                <p style={{ color: "#6B6B6B", fontSize: "1.1rem", margin: 0, fontWeight: 300 }}>
+                <p className="text-text-secondary text-[1.1rem] m-0 font-light">
                     Everything you need to rent, list, and manage trading agents on PolyHunt.
                 </p>
             </div>
 
             {/* Quick Action Cards */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "16px", marginBottom: "60px" }}>
-                <Link href="/marketplace" style={{ textDecoration: "none" }}>
-                    <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "24px", cursor: "pointer", transition: "border-color 0.2s" }}
-                        onMouseEnter={e => (e.currentTarget.style.borderColor = "#165DFC")}
-                        onMouseLeave={e => (e.currentTarget.style.borderColor = "#E5E7EB")}>
-                        <div style={{ color: "#165DFC", marginBottom: "12px" }}><Zap size={20} /></div>
-                        <h3 style={{ fontSize: "1rem", fontWeight: 600, color: "#111111", margin: "0 0 6px 0" }}>Rent an Agent</h3>
-                        <p style={{ color: "#6B7280", fontSize: "0.9rem", margin: 0 }}>Browse the marketplace and deploy in seconds</p>
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4 mb-15">
+                <Link href="/marketplace" className="no-underline">
+                    <div className="bg-bg-secondary border border-border rounded-xl p-6 cursor-pointer transition-colors duration-200 hover:border-brand">
+                        <div className="text-brand mb-3"><Zap size={20} /></div>
+                        <h3 className="text-[1rem] font-semibold text-text-primary m-0 mb-1.5">Rent an Agent</h3>
+                        <p className="text-text-secondary text-[0.9rem] m-0">Browse the marketplace and deploy in seconds</p>
                     </div>
                 </Link>
-                <Link href="/submit" style={{ textDecoration: "none" }}>
-                    <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "24px", cursor: "pointer", transition: "border-color 0.2s" }}
-                        onMouseEnter={e => (e.currentTarget.style.borderColor = "#165DFC")}
-                        onMouseLeave={e => (e.currentTarget.style.borderColor = "#E5E7EB")}>
-                        <div style={{ color: "#165DFC", marginBottom: "12px" }}><Upload size={20} /></div>
-                        <h3 style={{ fontSize: "1rem", fontWeight: 600, color: "#111111", margin: "0 0 6px 0" }}>List Your Agent</h3>
-                        <p style={{ color: "#6B7280", fontSize: "0.9rem", margin: 0 }}>Earn USDC by listing your trading agent</p>
+                <Link href="/submit" className="no-underline">
+                    <div className="bg-bg-secondary border border-border rounded-xl p-6 cursor-pointer transition-colors duration-200 hover:border-brand">
+                        <div className="text-brand mb-3"><Upload size={20} /></div>
+                        <h3 className="text-[1rem] font-semibold text-text-primary m-0 mb-1.5">List Your Agent</h3>
+                        <p className="text-text-secondary text-[0.9rem] m-0">Earn USDC by listing your trading agent</p>
                     </div>
                 </Link>
-                <Link href="/dashboard" style={{ textDecoration: "none" }}>
-                    <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "24px", cursor: "pointer", transition: "border-color 0.2s" }}
-                        onMouseEnter={e => (e.currentTarget.style.borderColor = "#165DFC")}
-                        onMouseLeave={e => (e.currentTarget.style.borderColor = "#E5E7EB")}>
-                        <div style={{ color: "#165DFC", marginBottom: "12px" }}><Wallet size={20} /></div>
-                        <h3 style={{ fontSize: "1rem", fontWeight: 600, color: "#111111", margin: "0 0 6px 0" }}>Your Dashboard</h3>
-                        <p style={{ color: "#6B7280", fontSize: "0.9rem", margin: 0 }}>Monitor live trades and manage your rentals</p>
+                <Link href="/dashboard" className="no-underline">
+                    <div className="bg-bg-secondary border border-border rounded-xl p-6 cursor-pointer transition-colors duration-200 hover:border-brand">
+                        <div className="text-brand mb-3"><Wallet size={20} /></div>
+                        <h3 className="text-[1rem] font-semibold text-text-primary m-0 mb-1.5">Your Dashboard</h3>
+                        <p className="text-text-secondary text-[0.9rem] m-0">Monitor live trades and manage your rentals</p>
                     </div>
                 </Link>
             </div>
 
             {/* Pluggable Market Integration Section for Builders */}
-            <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "16px", padding: "32px", marginBottom: "40px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
-                    <Terminal size={22} color="#165DFC" />
-                    <h2 style={{ fontSize: "1.25rem", fontWeight: 600, color: "#111111", margin: 0 }}>Adding a new PredictionMarketSource</h2>
+            <div className="bg-bg-secondary border border-border rounded-2xl p-8 mb-10">
+                <div className="flex items-center gap-3 mb-5">
+                    <Terminal size={22} className="text-brand" />
+                    <h2 className="text-[1.25rem] font-bold text-text-primary m-0">Adding a new PredictionMarketSource</h2>
                 </div>
-                <p style={{ color: "#4B5563", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: "16px" }}>
+                <p className="text-text-secondary text-[0.95rem] leading-relaxed mb-4">
                     To add support for a new prediction market type (e.g. Kalshi, Manifold, or custom contracts), implement the pluggable registry interface in your agent index module:
                 </p>
-                <pre style={{ background: "#F3F4F6", padding: "16px", borderRadius: "8px", overflowX: "auto", fontSize: "0.85rem", color: "#111827", lineHeight: 1.5, fontFamily: "monospace" }}>
+                <pre className="bg-bg-primary p-4 rounded-lg overflow-x-auto text-[0.85rem] text-text-primary leading-relaxed font-mono">
 {`import { PredictionMarketSource, PredictionMarket } from "@/lib/markets/types";
 import { registerMarketSource } from "@/lib/markets/registry";
-
+ 
 export const CustomMarketSource: PredictionMarketSource = {
   id: "custom-market",
   name: "Custom Market Protocol",
@@ -142,40 +136,40 @@ export const CustomMarketSource: PredictionMarketSource = {
       url: \`https://custom-market.com/markets/\${m.slug}\`
     }));
   },
-
+ 
   async getMarket(marketId: string) {
     // ... fetch individual market data ...
     return null;
   }
 };
-
+ 
 // Register source with the pluggable engine registry
 registerMarketSource(CustomMarketSource);`}
                 </pre>
                 
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "24px", borderTop: "1px solid #E8E8E8", paddingTop: "20px" }}>
-                    <a href="https://docs.polymarket.com/builders/overview" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: "#165DFC", textDecoration: "none", fontSize: "0.85rem", fontWeight: 600 }}>
+                <div className="flex flex-wrap gap-4 mt-6 border-t border-border pt-5">
+                    <a href="https://docs.polymarket.com/builders/overview" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-brand hover:text-brand-dark no-underline text-[0.85rem] font-semibold">
                         Polymarket Builder Docs <ExternalLink size={14} />
                     </a>
-                    <span style={{ color: "#D1D5DB" }}>|</span>
-                    <a href="https://docs.robinhood.com/chain/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: "#165DFC", textDecoration: "none", fontSize: "0.85rem", fontWeight: 600 }}>
+                    <span className="text-text-muted">|</span>
+                    <a href="https://docs.robinhood.com/chain/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-brand hover:text-brand-dark no-underline text-[0.85rem] font-semibold">
                         Robinhood Chain L2 Docs <ExternalLink size={14} />
                     </a>
                 </div>
             </div>
 
             {/* Documentation Sections */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
+            <div className="flex flex-col gap-10">
                 {sections.map((section) => (
-                    <div key={section.id} style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "16px", padding: "32px" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
+                    <div key={section.id} className="bg-bg-secondary border border-border rounded-2xl p-8">
+                        <div className="flex items-center gap-3 mb-5">
                             {section.icon}
-                            <h2 style={{ fontSize: "1.25rem", fontWeight: 600, color: "#111111", margin: 0 }}>{section.title}</h2>
+                            <h2 className="text-[1.25rem] font-bold text-text-primary m-0">{section.title}</h2>
                         </div>
-                        <ol style={{ margin: 0, padding: "0 0 0 20px", display: "flex", flexDirection: "column", gap: "12px" }}>
+                        <ol className="m-0 pl-5 flex flex-col gap-3">
                             {section.content.map((step, i) => (
-                                <li key={i} style={{ color: "#4B5563", fontSize: "0.95rem", lineHeight: 1.6 }}
-                                    dangerouslySetInnerHTML={{ __html: step.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#111111">$1</strong>').replace(/`(.*?)`/g, '<code style="background:#F3F4F6;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:0.85em;color:#165DFC">$1</code>') }}
+                                <li key={i} className="text-text-secondary text-[0.95rem] leading-relaxed"
+                                    dangerouslySetInnerHTML={{ __html: step.replace(/\*\*(.*?)\*\*/g, '<strong class="text-text-primary">$1</strong>').replace(/`(.*?)`/g, '<code class="bg-bg-primary px-1.5 py-0.5 rounded font-mono text-[0.85em] text-brand">$1</code>') }}
                                 />
                             ))}
                         </ol>

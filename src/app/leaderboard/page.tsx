@@ -32,45 +32,39 @@ export default function LeaderboardPage() {
     }, [activeTab]);
 
     return (
-        <div style={{ minHeight: "100vh", background: "#FFFFFF", padding: "40px 24px" }}>
-            <div style={{ maxWidth: "860px", margin: "0 auto" }}>
+        <div className="min-h-screen bg-bg-secondary py-10 px-6">
+            <div className="max-w-[860px] mx-auto">
                 
                 {/* Header */}
-                <div style={{ textAlign: "center", marginBottom: "40px" }}>
-                    <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "64px", height: "64px", borderRadius: "50%", background: "#FEF3C7", marginBottom: "16px" }}>
-                        <Trophy size={32} color="#D97706" />
+                <div className="text-center mb-10">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-100 mb-4">
+                        <Trophy size={32} className="text-amber-700" />
                     </div>
-                    <h1 style={{ fontSize: "2.5rem", fontWeight: 800, margin: 0, color: "#111111", letterSpacing: "-0.02em" }}>
+                    <h1 className="text-[2.5rem] font-extrabold m-0 text-text-primary tracking-tight">
                         The Leaderboard
                     </h1>
-                    <p style={{ fontSize: "1.1rem", color: "#6B6B6B", marginTop: "12px", maxWidth: "500px", margin: "12px auto 0" }}>
+                    <p className="text-[1.1rem] text-text-secondary mt-3 max-w-[500px] mx-auto">
                         Discover the most profitable algorithms and the elite Polyhunters who found them.
                     </p>
                 </div>
 
                 {/* Tabs */}
-                <div style={{ display: "flex", justifyContent: "center", marginBottom: "32px" }}>
-                    <div style={{ display: "flex", background: "#FFFFFF", padding: "6px", borderRadius: "12px", border: "1px solid #E8E8E8", boxShadow: "0 2px 8px rgba(0,0,0,0.02)" }}>
+                <div className="flex justify-center mb-8">
+                    <div className="flex bg-bg-secondary p-1.5 rounded-xl border border-border shadow-sm">
                         <button
                             onClick={() => setActiveTab("agents")}
-                            style={{
-                                padding: "10px 24px", fontSize: "0.95rem", fontWeight: 600, borderRadius: "8px", border: "none", cursor: "pointer", transition: "all 0.15s",
-                                display: "flex", alignItems: "center", gap: "8px",
-                                background: activeTab === "agents" ? "#165DFC" : "transparent",
-                                color: activeTab === "agents" ? "#FFFFFF" : "#6B6B6B"
-                            }}
+                            className={`px-6 py-2.5 text-[0.95rem] font-semibold rounded-lg border-none cursor-pointer transition-all duration-150 flex items-center gap-2 ${
+                                activeTab === "agents" ? "bg-brand text-white" : "bg-transparent text-text-secondary"
+                            }`}
                         >
                             <TrendingUp size={18} />
                             Top Agents
                         </button>
                         <button
                             onClick={() => setActiveTab("hunters")}
-                            style={{
-                                padding: "10px 24px", fontSize: "0.95rem", fontWeight: 600, borderRadius: "8px", border: "none", cursor: "pointer", transition: "all 0.15s",
-                                display: "flex", alignItems: "center", gap: "8px",
-                                background: activeTab === "hunters" ? "#165DFC" : "transparent",
-                                color: activeTab === "hunters" ? "#FFFFFF" : "#6B6B6B"
-                            }}
+                            className={`px-6 py-2.5 text-[0.95rem] font-semibold rounded-lg border-none cursor-pointer transition-all duration-150 flex items-center gap-2 ${
+                                activeTab === "hunters" ? "bg-brand text-white" : "bg-transparent text-text-secondary"
+                            }`}
                         >
                             <Users size={18} />
                             Top Hunters
@@ -80,23 +74,23 @@ export default function LeaderboardPage() {
 
                 {/* Content */}
                 {loading ? (
-                    <div style={{ textAlign: "center", padding: "80px" }}>
-                        <div style={{ border: "3px solid #E8E8E8", borderTopColor: "#165DFC", borderRadius: "50%", width: "32px", height: "32px", animation: "spin 1s linear infinite", margin: "0 auto" }}></div>
+                    <div className="text-center py-20">
+                        <div className="spinner border-3 border-border border-t-brand rounded-full w-8 h-8 animate-spin mx-auto"></div>
                     </div>
                 ) : activeTab === "agents" ? (
-                    <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                    <div className="flex flex-col gap-4">
                         {agents.length === 0 ? (
-                            <div style={{ textAlign: "center", padding: "60px", background: "#FFFFFF", borderRadius: "12px", border: "1px solid #E8E8E8", color: "#6B6B6B" }}>
+                            <div className="text-center py-15 bg-bg-secondary rounded-xl border border-border text-text-secondary">
                                 No agents currently ranked.
                             </div>
                         ) : (
                             agents.map((agent, index) => (
-                                <div key={agent.id} style={{ position: "relative" }}>
-                                    <div style={{ position: "absolute", left: "-20px", top: "50%", transform: "translateY(-50%)", zIndex: 10 }}>
-                                        {index === 0 && <Crown size={32} color="#FBBF24" fill="#FBBF24" style={{ filter: "drop-shadow(0 2px 4px rgba(251,191,36,0.3))" }} />}
-                                        {index === 1 && <Medal size={28} color="#9CA3AF" fill="#E5E7EB" style={{ filter: "drop-shadow(0 2px 4px rgba(156,163,175,0.3))" }} />}
-                                        {index === 2 && <Award size={28} color="#D97706" fill="#FDE68A" style={{ filter: "drop-shadow(0 2px 4px rgba(217,119,6,0.3))" }} />}
-                                        {index > 2 && <div style={{ width: "24px", height: "24px", background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 700, color: "#9CA3AF", boxShadow: "0 2px 4px rgba(0,0,0,0.05)" }}>{index + 1}</div>}
+                                <div key={agent.id} className="relative">
+                                    <div className="absolute -left-5 top-1/2 -translate-y-1/2 z-10">
+                                        {index === 0 && <Crown size={32} className="text-amber-400 fill-amber-400 drop-shadow-[0_2px_4px_rgba(251,191,36,0.3)]" />}
+                                        {index === 1 && <Medal size={28} className="text-text-muted fill-bg-primary drop-shadow-[0_2px_4px_rgba(156,163,175,0.3)]" />}
+                                        {index === 2 && <Award size={28} className="text-amber-700 fill-amber-100 drop-shadow-[0_2px_4px_rgba(217,119,6,0.3)]" />}
+                                        {index > 2 && <div className="w-6 h-6 bg-bg-secondary border border-border rounded-full flex items-center justify-center text-[0.8rem] font-bold text-text-muted shadow-sm">{index + 1}</div>}
                                     </div>
                                     <AgentCard agent={agent} />
                                 </div>
@@ -104,48 +98,44 @@ export default function LeaderboardPage() {
                         )}
                     </div>
                 ) : (
-                    <div style={{ background: "#FFFFFF", borderRadius: "16px", border: "1px solid #E8E8E8", overflow: "hidden" }}>
+                    <div className="bg-bg-secondary rounded-2xl border border-border overflow-hidden">
                         {hunters.length === 0 ? (
-                            <div style={{ textAlign: "center", padding: "60px", color: "#6B6B6B" }}>
+                            <div className="text-center py-15 text-text-secondary">
                                 No hunters have discovered agents yet.
                             </div>
                         ) : (
                             hunters.map((hunter, index) => (
-                                <Link href={`/profile/${hunter.wallet}`} key={hunter.wallet} style={{ textDecoration: "none" }}>
-                                    <div style={{ 
-                                        display: "flex", alignItems: "center", padding: "20px 24px", 
-                                        borderBottom: index !== hunters.length - 1 ? "1px solid #E8E8E8" : "none",
-                                        transition: "background 0.15s", cursor: "pointer"
-                                    }}
-                                    onMouseEnter={e => e.currentTarget.style.backgroundColor = "#F9FAFB"}
-                                    onMouseLeave={e => e.currentTarget.style.backgroundColor = "transparent"}
+                                <Link href={`/profile/${hunter.wallet}`} key={hunter.wallet} className="no-underline">
+                                    <div className={`flex items-center p-5 px-6 border-b border-border transition-colors duration-150 cursor-pointer ${
+                                        index === hunters.length - 1 ? "border-none" : ""
+                                    } hover:bg-bg-primary`}
                                     >
-                                        <div style={{ width: "40px", fontSize: "1.2rem", fontWeight: 700, color: index < 3 ? "#111111" : "#9CA3AF" }}>
+                                        <div className={`w-10 text-[1.2rem] font-bold ${index < 3 ? "text-text-primary" : "text-text-muted"}`}>
                                             #{index + 1}
                                         </div>
                                         
-                                        <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "#F3F4F6", overflow: "hidden", marginRight: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                        <div className="w-12 h-12 rounded-full bg-bg-primary overflow-hidden mr-4 flex items-center justify-center border border-border">
                                             {hunter.avatarUrl ? (
-                                                <img src={hunter.avatarUrl} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                                                <img src={hunter.avatarUrl} alt="avatar" className="w-full h-full object-cover" />
                                             ) : (
-                                                <UserIcon size={24} color="#D1D5DB" />
+                                                <UserIcon size={24} className="text-text-muted" />
                                             )}
                                         </div>
                                         
-                                        <div style={{ flex: 1 }}>
-                                            <h3 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 700, color: "#111111" }}>
+                                        <div className="flex-1">
+                                            <h3 className="m-0 text-[1.1rem] font-bold text-text-primary">
                                                 {hunter.username || "Anonymous Hunter"}
                                             </h3>
-                                            <p style={{ margin: "4px 0 0 0", fontSize: "0.85rem", color: "#6B6B6B", fontFamily: "monospace" }}>
+                                            <p className="m-0 mt-1 text-[0.85rem] text-text-secondary font-mono">
                                                 {hunter.wallet.slice(0, 6)}...{hunter.wallet.slice(-4)}
                                             </p>
                                         </div>
                                         
-                                        <div style={{ textAlign: "right" }}>
-                                            <div style={{ fontSize: "1.2rem", fontWeight: 800, color: "#165DFC" }}>
-                                                {hunter.score.toFixed(1)} <span style={{ fontSize: "0.8rem", color: "#6B6B6B", fontWeight: 500 }}>SCORE</span>
+                                        <div className="text-right">
+                                            <div className="text-[1.2rem] font-extrabold text-brand">
+                                                {hunter.score.toFixed(1)} <span className="text-[0.8rem] text-text-secondary font-medium">SCORE</span>
                                             </div>
-                                            <div style={{ fontSize: "0.85rem", color: "#9CA3AF", marginTop: "2px" }}>
+                                            <div className="text-[0.85rem] text-text-muted mt-0.5">
                                                 {hunter.huntedCount} Agents Found
                                             </div>
                                         </div>

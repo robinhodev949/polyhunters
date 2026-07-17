@@ -2,42 +2,39 @@
 
 export function Sidebar() {
     return (
-        <div style={{ padding: "24px", background: "#f9fafb", borderRadius: "12px", border: "1px solid #E5E7EB" }}>
-            <h3 style={{ fontSize: "0.9rem", fontWeight: 700, margin: "0 0 16px 0", color: "#4B5563", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+        <div className="p-6 bg-bg-primary rounded-xl border border-border">
+            <h3 className="text-[0.9rem] font-bold mb-4 text-text-secondary uppercase tracking-wider">
                 Platform Stats
             </h3>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div className="flex flex-col gap-4">
                 <div>
-                    <div style={{ fontSize: "0.85rem", color: "#6B7280", marginBottom: "4px" }}>Total Volume Secured</div>
-                    <div style={{ fontSize: "1.4rem", fontWeight: 700, color: "#000" }}>$42.8M</div>
+                    <div className="text-[0.85rem] text-text-secondary mb-1">Total Volume Secured</div>
+                    <div className="text-[1.4rem] font-bold text-text-primary">$42.8M</div>
                 </div>
 
                 <hr className="divider" />
 
                 <div>
-                    <div style={{ fontSize: "0.85rem", color: "#6B7280", marginBottom: "4px" }}>Active OpenClaw Nodes</div>
-                    <div style={{ fontSize: "1.4rem", fontWeight: 700, color: "#000" }}>1,248</div>
+                    <div className="text-[0.85rem] text-text-secondary mb-1">Active OpenClaw Nodes</div>
+                    <div className="text-[1.4rem] font-bold text-text-primary">1,248</div>
                 </div>
 
                 <hr className="divider" />
 
                 <div>
-                    <div style={{ fontSize: "0.85rem", color: "#6B7280", marginBottom: "4px" }}>Avg. Daily ROI</div>
-                    <div style={{ fontSize: "1.4rem", fontWeight: 700, color: "#00C853" }}>+1.4%</div>
+                    <div className="text-[0.85rem] text-text-secondary mb-1">Avg. Daily ROI</div>
+                    <div className="text-[1.4rem] font-bold text-success">+1.4%</div>
                 </div>
             </div>
 
-            <div style={{ marginTop: "32px" }}>
-                <h3 style={{ fontSize: "0.9rem", fontWeight: 700, margin: "0 0 16px 0", color: "#4B5563", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+            <div className="mt-8">
+                <h3 className="text-[0.9rem] font-bold mb-4 text-text-secondary uppercase tracking-wider">
                     Trending Tags
                 </h3>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                <div className="flex flex-wrap gap-2">
                     {["Politics", "Sports", "Crypto", "Macro", "Arbitrage", "NLP", "Low-Liquidity"].map((tag) => (
-                        <span key={tag} className="tag" style={{ cursor: "pointer", transition: "all 0.15s ease" }}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#E5E7EB"}
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f3f4f6"}
-                        >
+                        <span key={tag} className="tag cursor-pointer transition-colors duration-150 hover:bg-border bg-bg-primary">
                             {tag}
                         </span>
                     ))}
