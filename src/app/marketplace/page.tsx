@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useAccount } from "wagmi";
@@ -88,6 +88,19 @@ function CategoryPolygonIcon({ category, active }: { category: string; active: b
 }
 
 export default function MarketplacePage() {
+    return (
+        <Suspense fallback={
+            <div style={{ minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div className="spinner" style={{ border: "3px solid #E8E8E8", borderTopColor: "#165DFC", borderRadius: "50%", width: "24px", height: "24px", animation: "spin 1s linear infinite" }}></div>
+                <style dangerouslySetInnerHTML={{__html: `@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}} />
+            </div>
+        }>
+            <MarketplaceContent />
+        </Suspense>
+    );
+}
+
+function MarketplaceContent() {
     const searchParams = useSearchParams();
     const similarTo = searchParams.get("similarTo");
     const { address } = useAccount();
