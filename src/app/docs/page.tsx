@@ -54,12 +54,12 @@ const sections = [
     {
         id: "roadmap",
         icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#165DFC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>,
-        title: "Roadmap — Coming Soon",
+        title: "Ecosystem Roadmap",
         content: [
-            "**Telegram Bot** — @polyhunt_bot: Link your EVM wallet, check agent P&L, and send `/stop` commands from Telegram.",
-            "**Arbitrum / Orbit native token** — Pay for agent rentals with our upcoming platform token in addition to USDC and ETH.",
-            "**On-chain Upvotes** — Record upvotes on-chain so the most successful agents naturally rise to the top of the feed.",
-            "**Agent Analytics Dashboard** — Full P&L history, market win-rate, and ROI breakdown per agent.",
+            "**Interactive Badges** — Earn platform achievements on profiles like *Genesis Hunter*, *Elite Builder*, and *Escrow Pioneer*.",
+            "**USDC Escrow Contract** — Active rental escrow locks deposits and automates payouts natively on Robinhood Chain L2.",
+            "**Telegram Notification Bot** — Link your EVM wallet, check agent P&L, and send `/stop` commands directly from Telegram.",
+            "**Multi-Asset Support** — Pay for agent rentals using both USDC and our native utility token.",
         ]
     },
 ];

@@ -51,6 +51,23 @@ export default function MarketplacePage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [activeCategory, setActiveCategory] = useState("All");
 
+    const [sortBy, setSortBy] = useState<"upvotes" | "roi" | "price_asc" | "price_desc">("upvotes");
+    const [statusFilter, setStatusFilter] = useState<"all" | "live" | "beta">("all");
+    const [networkFilter, setNetworkFilter] = useState<"all" | "polymarket" | "robinhood">("all");
+
+    const selectStyle: React.CSSProperties = {
+        padding: "8px 12px",
+        borderRadius: "8px",
+        border: "1px solid #E8E8E8",
+        background: "#FFFFFF",
+        color: "#111111",
+        fontSize: "0.85rem",
+        fontWeight: 500,
+        outline: "none",
+        cursor: "pointer",
+        transition: "border-color 0.15s",
+    };
+
     useEffect(() => {
         async function loadAgents() {
             try {
@@ -75,12 +92,35 @@ export default function MarketplacePage() {
         loadAgents();
     }, []);
 
-    const filteredAgents = agents.filter(agent => {
-        const matchesSearch = agent.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                              agent.tagline.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesCategory = activeCategory === "All" || agent.tags.includes(activeCategory);
-        return matchesSearch && matchesCategory;
-    });
+    const processedAgents = agents
+        .filter(agent => {
+            const matchesSearch = agent.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                  agent.tagline.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesCategory = activeCategory === "All" || agent.tags.includes(activeCategory);
+            
+            const matchesStatus = statusFilter === "all" || agent.status === statusFilter;
+            
+            const matchesNetwork = networkFilter === "all" || 
+                (networkFilter === "polymarket" && agent.marketSourceIds.includes("polymarket")) ||
+                (networkFilter === "robinhood" && agent.marketSourceIds.includes("robinhood"));
+                
+            return matchesSearch && matchesCategory && matchesStatus && matchesNetwork;
+        })
+        .sort((a, b) => {
+            if (sortBy === "upvotes") {
+                return b.upvotes - a.upvotes;
+            }
+            if (sortBy === "roi") {
+                return b.roi - a.roi;
+            }
+            if (sortBy === "price_asc") {
+                return a.pricePerDay - b.pricePerDay;
+            }
+            if (sortBy === "price_desc") {
+                return b.pricePerDay - a.pricePerDay;
+            }
+            return 0;
+        });
 
     return (
         <div style={{ background: "#FAFAFA", minHeight: "calc(100vh - 56px)" }}>
@@ -125,26 +165,78 @@ export default function MarketplacePage() {
             {/* List Content */}
             <div style={{ maxWidth: "860px", margin: "0 auto", padding: "48px 32px" }}>
                 
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px", flexWrap: "wrap", gap: "16px" }}>
+                <div style={{ 
+                    display: "flex", 
+                    justifyContent: "space-between", 
+                    alignItems: "center", 
+                    marginBottom: "24px", 
+                    flexWrap: "wrap", 
+                    gap: "16px",
+                    width: "100%"
+                }}>
                     <span style={{ fontSize: "0.9rem", color: "#6B6B6B", fontWeight: 500 }}>
-                        {filteredAgents.length} agents {activeCategory !== "All" ? `in ${activeCategory}` : "found"}
+                        {processedAgents.length} agents {activeCategory !== "All" ? `in ${activeCategory}` : "found"}
                     </span>
-                    <div className="market-search" style={{ position: "relative", width: "260px" }}>
-                        <Search size={16} color="#9CA3AF" style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)" }} />
-                        <input 
-                            type="text" 
-                            placeholder="Search agents..." 
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            style={{ 
-                                width: "100%", padding: "10px 16px 10px 38px", 
-                                borderRadius: "8px", border: "1px solid #E8E8E8", 
-                                outline: "none", fontSize: "0.9rem",
-                                transition: "border-color 0.2s"
-                            }} 
-                            onFocus={e => e.currentTarget.style.borderColor = "#165DFC"}
+                    
+                    <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                        {/* Search input */}
+                        <div className="market-search" style={{ position: "relative", width: "220px" }}>
+                            <Search size={14} color="#9CA3AF" style={{ position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)" }} />
+                            <input 
+                                type="text" 
+                                placeholder="Search..." 
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                style={{ 
+                                    width: "100%", padding: "8px 12px 8px 34px", 
+                                    borderRadius: "8px", border: "1px solid #E8E8E8", 
+                                    outline: "none", fontSize: "0.85rem",
+                                    transition: "all 0.15s"
+                                }} 
+                                onFocus={e => e.currentTarget.style.borderColor = "#CCFF00"}
+                                onBlur={e => e.currentTarget.style.borderColor = "#E8E8E8"}
+                            />
+                        </div>
+
+                        {/* Status Filter */}
+                        <select 
+                            value={statusFilter}
+                            onChange={(e: any) => setStatusFilter(e.target.value)}
+                            style={selectStyle}
+                            onFocus={e => e.currentTarget.style.borderColor = "#CCFF00"}
                             onBlur={e => e.currentTarget.style.borderColor = "#E8E8E8"}
-                        />
+                        >
+                            <option value="all">All Statuses</option>
+                            <option value="live">Live Only</option>
+                            <option value="beta">Beta Only</option>
+                        </select>
+
+                        {/* Network Filter */}
+                        <select 
+                            value={networkFilter}
+                            onChange={(e: any) => setNetworkFilter(e.target.value)}
+                            style={selectStyle}
+                            onFocus={e => e.currentTarget.style.borderColor = "#CCFF00"}
+                            onBlur={e => e.currentTarget.style.borderColor = "#E8E8E8"}
+                        >
+                            <option value="all">All Networks</option>
+                            <option value="polymarket">Polymarket</option>
+                            <option value="robinhood">Robinhood Chain</option>
+                        </select>
+
+                        {/* Sort By */}
+                        <select 
+                            value={sortBy}
+                            onChange={(e: any) => setSortBy(e.target.value)}
+                            style={selectStyle}
+                            onFocus={e => e.currentTarget.style.borderColor = "#CCFF00"}
+                            onBlur={e => e.currentTarget.style.borderColor = "#E8E8E8"}
+                        >
+                            <option value="upvotes">Sort: Upvotes</option>
+                            <option value="roi">Sort: ROI</option>
+                            <option value="price_asc">Sort: Price (Low to High)</option>
+                            <option value="price_desc">Sort: Price (High to Low)</option>
+                        </select>
                     </div>
                 </div>
 
@@ -152,13 +244,13 @@ export default function MarketplacePage() {
                     <div style={{ textAlign: "center", padding: "80px" }}>
                         <div className="spinner" style={{ border: "3px solid #E8E8E8", borderTopColor: "#165DFC", borderRadius: "50%", width: "24px", height: "24px", animation: "spin 1s linear infinite", margin: "0 auto" }}></div>
                     </div>
-                ) : filteredAgents.length === 0 ? (
+                ) : processedAgents.length === 0 ? (
                     <div style={{ textAlign: "center", padding: "80px", background: "#FFFFFF", borderRadius: "12px", border: "1px solid #E8E8E8" }}>
                         <p style={{ color: "#6B6B6B", fontSize: "1rem" }}>No agents found matching your criteria.</p>
                     </div>
                 ) : (
                     <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                        {filteredAgents.map(agent => (
+                        {processedAgents.map(agent => (
                             <AgentCard key={agent.id} agent={agent} />
                         ))}
                     </div>
