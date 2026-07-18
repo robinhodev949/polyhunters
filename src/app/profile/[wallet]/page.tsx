@@ -373,20 +373,80 @@ export default function ProfilePage({ params }: { params: Promise<{ wallet: stri
                                     transition: "all 0.2s", display: "flex", alignItems: "center", gap: "6px"
                                 }}
                             >
-                                <Award size={18} /> Badges
+                                <Award size={18} /> Badges {user?.badges ? `(${user.badges.length})` : ""}
                             </button>
                         </div>
 
                         {/* Tab Content */}
                         <div style={{ display: "flex", flexDirection: "column", gap: "16px", paddingBottom: "80px" }}>
                             {activeTab === "badges" ? (
-                                <div style={{ textAlign: "center", padding: "80px 20px", background: "#FFFFFF", borderRadius: "16px", border: "1px dashed #E8E8E8", color: "#6B6B6B" }}>
-                                    <Award size={40} color="#E8E8E8" style={{ marginBottom: "16px" }} />
-                                    <h3 style={{ margin: "0 0 8px 0", fontSize: "1.2rem", color: "#111111" }}>Coming Soon!</h3>
-                                    <p style={{ margin: 0, fontSize: "1rem" }}>
-                                        Polyhunters will soon be able to earn on-chain badges for their discoveries.
-                                    </p>
-                                </div>
+                                !(user?.badges && user.badges.length > 0) ? (
+                                    <div style={{ textAlign: "center", padding: "80px 20px", background: "#FFFFFF", borderRadius: "16px", border: "1px dashed #E8E8E8", color: "#6B6B6B" }}>
+                                        <Award size={40} color="#E8E8E8" style={{ marginBottom: "16px" }} />
+                                        <h3 style={{ margin: "0 0 8px 0", fontSize: "1.2rem", color: "#111111" }}>No badges unlocked yet</h3>
+                                        <p style={{ margin: 0, fontSize: "1rem" }}>
+                                            Submit agents, register custom bots, or upvote ecosystem builders to earn your first platform badge!
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "20px" }}>
+                                        {user.badges.map((badge: any) => (
+                                            <div key={badge.id} style={{
+                                                background: "#FFFFFF",
+                                                border: "1px solid #E8E8E8",
+                                                borderRadius: "12px",
+                                                padding: "24px",
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                alignItems: "center",
+                                                textAlign: "center",
+                                                boxShadow: "0 2px 8px rgba(0,0,0,0.02)",
+                                                transition: "all 0.2s ease"
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                e.currentTarget.style.borderColor = badge.color || "#CCFF00";
+                                                e.currentTarget.style.boxShadow = `0 8px 24px ${badge.color}1c`;
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.style.borderColor = "#E8E8E8";
+                                                e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.02)";
+                                            }}
+                                            >
+                                                <div style={{
+                                                    fontSize: "2.5rem",
+                                                    marginBottom: "12px",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    width: "64px",
+                                                    height: "64px",
+                                                    borderRadius: "50%",
+                                                    background: `${badge.color}0c`,
+                                                    border: `1px solid ${badge.color}2b`
+                                                }}>
+                                                    {badge.icon}
+                                                </div>
+                                                <h4 style={{ fontSize: "1.05rem", fontWeight: 700, margin: "0 0 6px 0", color: "#111111" }}>
+                                                    {badge.name}
+                                                </h4>
+                                                <p style={{ fontSize: "0.85rem", color: "#6B6B6B", margin: 0, lineHeight: 1.4, flexGrow: 1 }}>
+                                                    {badge.description}
+                                                </p>
+                                                <div style={{
+                                                    marginTop: "16px",
+                                                    fontSize: "0.75rem",
+                                                    fontWeight: 700,
+                                                    color: "#0A7C4E",
+                                                    background: "rgba(10,124,78,0.08)",
+                                                    padding: "4px 10px",
+                                                    borderRadius: "20px"
+                                                }}>
+                                                    ✓ Unlocked
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )
                             ) : agentsToShow.length === 0 ? (
                                 <div style={{ textAlign: "center", padding: "80px 20px", background: "#FFFFFF", borderRadius: "16px", border: "1px dashed #E8E8E8", color: "#6B6B6B" }}>
                                     <LinkIcon size={32} color="#E8E8E8" style={{ marginBottom: "16px" }} />
