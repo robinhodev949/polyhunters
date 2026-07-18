@@ -39,6 +39,7 @@ The prediction market ecosystem is rapidly evolving from manual trading to algor
 The official utility token for the PolyHunt ecosystem.
 
 * **Contract Address (Robinhood Chain L2):** `0x8cad179555e3de1e99cbdb900eae0593b9ec79db`
+* **Treasury / Reward Pool Wallet:** `0x784b1A416D313Ae5c82fE8cFa434A135b264bb2c`
 
 ## 🛠️ Builder Resources
 
