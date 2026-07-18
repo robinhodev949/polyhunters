@@ -1,9 +1,19 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Wallet, Shield, CheckCircle, Activity, Box, Lock, Cpu } from "lucide-react";
+import { ArrowRight, Wallet, Shield, CheckCircle, Activity, Box, Lock, Cpu, Copy, Check } from "lucide-react";
 
 export default function Home() {
+  const [copied, setCopied] = useState(false);
+  const ca = "0x8cad179555e3de1e99cbdb900eae0593b9ec79db";
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(ca);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div style={{ background: "#FAFAFA", color: "#111111", minHeight: "100vh", fontFamily: "var(--font-sans)", overflowX: "hidden" }}>
 
@@ -327,14 +337,29 @@ export default function Home() {
       </section>
 
       {/* ── Footer ── */}
-      <footer style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 32px 40px", borderTop: "1px solid #E8E8E8", paddingTop: "40px", display: "flex", justifyContent: "space-between", alignItems: "center", color: "#6B6B6B", fontSize: "0.9rem" }}>
-        <div>
-          © {new Date().getFullYear()} PolyHunt. All rights reserved. Built on Robinhood Chain.
+      <footer style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 32px 40px", borderTop: "1px solid #E8E8E8", paddingTop: "40px", color: "#6B6B6B", fontSize: "0.9rem" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px", marginBottom: "20px" }}>
+          <div>
+            © {new Date().getFullYear()} PolyHunt. All rights reserved. Built on Robinhood Chain.
+          </div>
+          
+          {/* $HUNTER CA */}
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", background: "#FFFFFF", padding: "6px 12px", borderRadius: "20px", border: "1px solid #E8E8E8", fontSize: "0.85rem" }}>
+            <span style={{ fontWeight: 700, color: "#111111" }}>$HUNTER CA:</span>
+            <code style={{ fontFamily: "monospace", color: "#6B6B6B" }}>0x8cad179555e3de1e99cbdb900eae0593b9ec79db</code>
+            <button onClick={handleCopy} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", padding: "2px", color: copied ? "#0A7C4E" : "#6B6B6B" }}>
+              {copied ? <Check size={14} /> : <Copy size={14} />}
+            </button>
+            {copied && <span style={{ fontSize: "0.75rem", color: "#0A7C4E", fontWeight: 600 }}>Copied!</span>}
+          </div>
         </div>
-        <div style={{ display: "flex", gap: "24px" }}>
-          <Link href="/terms" style={{ color: "#6B6B6B", textDecoration: "none" }}>Terms of Service</Link>
-          <Link href="/privacy-policy" style={{ color: "#6B6B6B", textDecoration: "none" }}>Privacy Policy</Link>
-          <Link href="/copyright" style={{ color: "#6B6B6B", textDecoration: "none" }}>Copyright</Link>
+
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
+          <div style={{ display: "flex", gap: "24px" }}>
+            <Link href="/terms" style={{ color: "#6B6B6B", textDecoration: "none" }}>Terms of Service</Link>
+            <Link href="/privacy-policy" style={{ color: "#6B6B6B", textDecoration: "none" }}>Privacy Policy</Link>
+            <Link href="/copyright" style={{ color: "#6B6B6B", textDecoration: "none" }}>Copyright</Link>
+          </div>
         </div>
       </footer>
 
