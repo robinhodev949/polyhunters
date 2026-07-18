@@ -145,7 +145,7 @@ export default function Season1Page() {
                             Total Rewards Pool
                         </div>
                         <div style={{ fontSize: "1.8rem", fontWeight: 800, color: "#165DFC" }}>
-                            $2,000 in $HUNTER
+                            $2,000
                         </div>
                         <div style={{ fontSize: "0.8rem", color: "#9CA3AF", marginTop: "4px" }}>
                             Funded by platform protocol fees
