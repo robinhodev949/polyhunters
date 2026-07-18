@@ -16,6 +16,7 @@ export function Navbar() {
 
     const navLinks = [
         { href: "/marketplace", label: "Marketplace" },
+        { href: "/season-1", label: "Season 1" },
         { href: "/leaderboard", label: "Leaderboards" },
         { href: "/submit", label: "Submit Agent" },
         { href: "/docs", label: "Docs" },
