@@ -16,7 +16,7 @@ export async function GET() {
         // Sum the blended score of all their hunted agents to find the top Polyhunters
         const ranked = users.map((user: any) => {
             const hunterScore = user.hunted.reduce((acc: number, agent: any) => {
-                return acc + (agent.upvotes * 1.5) + (agent.totalRentals * 2) + agent.roi;
+                return acc + 500 + (agent.upvotes * 10) + (agent.totalRentals * 100);
             }, 0);
             return {
                 wallet: user.wallet,
