@@ -8,7 +8,7 @@ export async function POST(req: Request) {
         const {
             name, tagline, description, pricePerDay, tags,
             dockerImageUrl, githubUrl, webhookUrl, hookToken, ownerWallet,
-            marketSourceIds
+            marketSourceIds, pricePerDayVariantB, abTestSplitPercent
         } = body;
 
         if (!name || !ownerWallet || pricePerDay === undefined) {
@@ -38,6 +38,8 @@ export async function POST(req: Request) {
                 tagline:        tagline       || "A PolyHunt Agent",
                 description:    description   || "",
                 pricePerDay:    Number(pricePerDay),
+                pricePerDayVariantB: pricePerDayVariantB !== undefined && pricePerDayVariantB !== null ? Number(pricePerDayVariantB) : null,
+                abTestSplitPercent: abTestSplitPercent !== undefined && abTestSplitPercent !== null ? Number(abTestSplitPercent) : null,
                 tags:           tags          || [],
                 dockerImageUrl: dockerImageUrl || null,
                 githubUrl:      githubUrl     || null,

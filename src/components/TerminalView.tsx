@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Terminal, Settings, Power } from "lucide-react";
+import { Terminal, Settings, Power, Sun, Moon } from "lucide-react";
 import { Agent } from "@/lib/agents";
 
 interface TerminalViewProps {
@@ -12,6 +12,7 @@ interface TerminalViewProps {
 export function TerminalView({ agent, onStop }: TerminalViewProps) {
     const [logs, setLogs] = useState<string[]>([]);
     const scrollRef = useRef<HTMLDivElement>(null);
+    const [isDarkTheme, setIsDarkTheme] = useState(true);
 
     useEffect(() => {
         // Initial boot sequence
@@ -65,9 +66,9 @@ export function TerminalView({ agent, onStop }: TerminalViewProps) {
 
     return (
         <div style={{
-            background: "#0A0A0A",
+            background: isDarkTheme ? "#0A0A0A" : "#F9FAFB",
             borderRadius: "12px",
-            border: "1px solid #262626",
+            border: isDarkTheme ? "1px solid #262626" : "1px solid #E5E7EB",
             overflow: "hidden",
             display: "flex",
             flexDirection: "column",
@@ -75,9 +76,9 @@ export function TerminalView({ agent, onStop }: TerminalViewProps) {
         }}>
             {/* Terminal Header */}
             <div style={{
-                background: "#171717",
+                background: isDarkTheme ? "#171717" : "#F3F4F6",
                 padding: "12px 16px",
-                borderBottom: "1px solid #262626",
+                borderBottom: isDarkTheme ? "1px solid #262626" : "1px solid #E5E7EB",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between"
@@ -88,12 +89,24 @@ export function TerminalView({ agent, onStop }: TerminalViewProps) {
                         <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: "#EAB308" }}></div>
                         <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: "#22C55E" }}></div>
                     </div>
-                    <div style={{ color: "#A3A3A3", fontSize: "0.85rem", fontFamily: "monospace", display: "flex", alignItems: "center", gap: "6px" }}>
+                    <div style={{ color: isDarkTheme ? "#A3A3A3" : "#4B5563", fontSize: "0.85rem", fontFamily: "monospace", display: "flex", alignItems: "center", gap: "6px" }}>
                         <Terminal size={14} /> OpenClaw Shell — {agent.name} <span className="cursor-blink">_</span>
                     </div>
                 </div>
-                <div style={{ display: "flex", gap: "10px" }}>
-                    <button style={{ background: "transparent", border: "none", color: "#A3A3A3", cursor: "pointer" }}><Settings size={14} /></button>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    {/* Theme Toggle Button */}
+                    <button 
+                        onClick={() => setIsDarkTheme(!isDarkTheme)}
+                        style={{
+                            background: "transparent", border: "none", color: isDarkTheme ? "#A3A3A3" : "#4B5563", cursor: "pointer", display: "flex", alignItems: "center"
+                        }}
+                        title={isDarkTheme ? "Light Mode" : "Dark Mode"}
+                    >
+                        {isDarkTheme ? <Sun size={14} /> : <Moon size={14} />}
+                    </button>
+
+                    <button style={{ background: "transparent", border: "none", color: isDarkTheme ? "#A3A3A3" : "#4B5563", cursor: "pointer" }}><Settings size={14} /></button>
+                    
                     <button
                         onClick={() => {
                             if ((window as any).__simInterval) clearInterval((window as any).__simInterval);
@@ -117,13 +130,23 @@ export function TerminalView({ agent, onStop }: TerminalViewProps) {
                     fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
                     fontSize: "0.85rem",
                     lineHeight: "1.6",
-                    color: "#D4D4D8"
+                    color: isDarkTheme ? "#D4D4D8" : "#1F2937"
                 }}
             >
                 {logs.map((log, index) => (
                     <div key={index} dangerouslySetInnerHTML={{ __html: log }} style={{ marginBottom: "4px" }} />
                 ))}
             </div>
+            
+            {/* Inject log styles for Light/Dark terminal views compatibility */}
+            <style dangerouslySetInnerHTML={{ __html: `
+                .log-timestamp { color: ${isDarkTheme ? "#71717A" : "#6B7280"}; }
+                .log-info { color: ${isDarkTheme ? "#3B82F6" : "#2563EB"}; }
+                .log-warn { color: ${isDarkTheme ? "#F59E0B" : "#D97706"}; }
+                .log-trade { color: ${isDarkTheme ? "#8B5CF6" : "#7C3AED"}; }
+                .log-success { color: ${isDarkTheme ? "#10B981" : "#059669"}; }
+                .log-profit { color: ${isDarkTheme ? "#10B981" : "#059669"}; font-weight: 700; }
+            `}} />
         </div>
     );
 }

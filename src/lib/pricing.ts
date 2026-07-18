@@ -12,11 +12,33 @@ export interface PricingResult {
 
 export async function priceRental(params: {
     wallet: string;
-    pricePerDay: number;
+    pricePerDay?: number;
+    agent?: {
+        pricePerDay: number;
+        pricePerDayVariantB?: number | null;
+        abTestSplitPercent?: number | null;
+    };
     days: number;
 }): Promise<PricingResult> {
-    const { wallet, pricePerDay, days } = params;
-    const originalAmount = pricePerDay * days;
+    const { wallet, pricePerDay, agent, days } = params;
+    
+    let selectedPricePerDay = pricePerDay ?? 5;
+    if (agent) {
+        selectedPricePerDay = agent.pricePerDay;
+        if (agent.pricePerDayVariantB !== null && agent.pricePerDayVariantB !== undefined) {
+            const splitPercent = agent.abTestSplitPercent ?? 50;
+            let sum = 0;
+            for (let i = 0; i < wallet.length; i++) {
+                sum += wallet.charCodeAt(i);
+            }
+            const bucket = sum % 100;
+            if (bucket < splitPercent) {
+                selectedPricePerDay = agent.pricePerDayVariantB;
+            }
+        }
+    }
+
+    const originalAmount = selectedPricePerDay * days;
 
     // 1. Look up or create the user
     let user = await db.user.findUnique({

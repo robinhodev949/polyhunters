@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAccount, useConnect } from "wagmi";
-import { Terminal, Activity, Server, Database, Copy, Check, ExternalLink, RefreshCw, Wallet } from "lucide-react";
+import { Terminal, Activity, Server, Database, Copy, Check, ExternalLink, RefreshCw, Wallet, ArrowUp, BarChart3, HelpCircle } from "lucide-react";
 
 interface Rental {
     id: string;
@@ -129,11 +129,42 @@ function RentalCard({ rental }: { rental: Rental }) {
     );
 }
 
+function Sparkline({ data }: { data: number[] }) {
+    if (!data || data.length === 0) return null;
+    const max = Math.max(...data, 1);
+    const width = 120;
+    const height = 30;
+    
+    const points = data
+        .map((val, index) => {
+            const x = (index / (data.length - 1)) * width;
+            const y = height - (val / max) * height;
+            return `${x},${y}`;
+        })
+        .join(" ");
+
+    return (
+        <svg width={width} height={height} style={{ overflow: "visible" }}>
+            <polyline
+                fill="none"
+                stroke="#165DFC"
+                strokeWidth="2"
+                points={points}
+            />
+        </svg>
+    );
+}
+
 export default function DashboardPage() {
     const { address, isConnected } = useAccount();
     const { connect, connectors } = useConnect();
     const [rentals, setRentals] = useState<Rental[]>([]);
     const [loading, setLoading] = useState(false);
+    
+    // Tab states & builder performance data
+    const [activeTab, setActiveTab] = useState<"rentals" | "studio">("rentals");
+    const [isBuilder, setIsBuilder] = useState(false);
+    const [builderEarnings, setBuilderEarnings] = useState<any[]>([]);
 
     const handleConnect = () => {
         const injectedConnector = connectors.find(c => c.id === 'injected') || connectors[0];
@@ -152,8 +183,25 @@ export default function DashboardPage() {
             .finally(() => setLoading(false));
     };
 
+    const loadEarnings = () => {
+        if (!isConnected || !address) return;
+        fetch(`/api/user/earnings?wallet=${address}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.isBuilder) {
+                    setIsBuilder(true);
+                    setBuilderEarnings(data.earnings || []);
+                } else {
+                    setIsBuilder(false);
+                    setBuilderEarnings([]);
+                }
+            })
+            .catch(console.error);
+    };
+
     useEffect(() => {
         loadRentals();
+        loadEarnings();
     }, [isConnected, address]);
 
     if (!isConnected) {
@@ -234,63 +282,182 @@ export default function DashboardPage() {
 
             <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "32px" }}>
 
-                {/* Active Rentals */}
-                <div style={{ marginBottom: "32px" }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
-                        <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#111111", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
-                            <Terminal size={16} color="#6B6B6B" /> Active Agents
-                            <span style={{ fontSize: "0.75rem", background: "#FAFAFA", color: "#6B6B6B", padding: "2px 8px", borderRadius: "4px", fontWeight: 600 }}>
-                                {loading ? "..." : rentals.length}
-                            </span>
-                        </h2>
-                        <button onClick={loadRentals} style={{
-                            background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "6px",
-                            padding: "6px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px",
-                            fontSize: "0.8rem", color: "#6B6B6B", transition: "all 0.15s"
-                        }}
-                        onMouseEnter={e => { e.currentTarget.style.borderColor = "#E8E8E8"; e.currentTarget.style.color = "#111111"; }}
-                        onMouseLeave={e => { e.currentTarget.style.borderColor = "#E8E8E8"; e.currentTarget.style.color = "#6B6B6B"; }}
+                {/* Tab Switcher */}
+                {isBuilder && (
+                    <div style={{ display: "flex", gap: "8px", borderBottom: "1px solid #E8E8E8", marginBottom: "28px" }}>
+                        <button
+                            onClick={() => setActiveTab("rentals")}
+                            style={{
+                                padding: "12px 20px",
+                                border: "none",
+                                background: "none",
+                                borderBottom: activeTab === "rentals" ? "3px solid #165DFC" : "none",
+                                color: activeTab === "rentals" ? "#165DFC" : "#6B6B6B",
+                                fontWeight: 700,
+                                fontSize: "0.95rem",
+                                cursor: "pointer",
+                                outline: "none"
+                            }}
                         >
-                            <RefreshCw size={13} /> Refresh
+                            Active Rentals
+                        </button>
+                        <button
+                            onClick={() => setActiveTab("studio")}
+                            style={{
+                                padding: "12px 20px",
+                                border: "none",
+                                background: "none",
+                                borderBottom: activeTab === "studio" ? "3px solid #165DFC" : "none",
+                                color: activeTab === "studio" ? "#165DFC" : "#6B6B6B",
+                                fontWeight: 700,
+                                fontSize: "0.95rem",
+                                cursor: "pointer",
+                                outline: "none"
+                            }}
+                        >
+                            Creator Studio
                         </button>
                     </div>
+                )}
 
-                    {loading ? (
-                        <div style={{ textAlign: "center", padding: "80px", color: "#9CA3AF" }}>Loading your agents...</div>
-                    ) : rentals.length === 0 ? (
-                        <div style={{
-                            background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "12px",
-                            padding: "56px 32px", textAlign: "center"
-                        }}>
-                            <Database size={32} color="#E8E8E8" style={{ margin: "0 auto 16px", display: "block" }} />
-                            <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#111111", marginBottom: "8px" }}>
-                                No active agents
-                            </h3>
-                            <p style={{ fontSize: "0.9rem", color: "#6B6B6B", marginBottom: "24px", maxWidth: "360px", margin: "0 auto 24px" }}>
-                                Deploy an agent from the marketplace to start automating prediction strategies.
-                            </p>
-                            <a href="/marketplace" style={{ textDecoration: "none" }}>
-                                <button style={{
-                                    background: "#CCFF00", color: "#000000", border: "none",
-                                    padding: "10px 24px", borderRadius: "6px", fontSize: "0.9rem",
-                                    fontWeight: 700, cursor: "pointer", transition: "all 0.15s",
-                                    boxShadow: "0 2px 8px rgba(204,255,0,0.15)"
-                                }}
-                                onMouseEnter={e => e.currentTarget.style.background = "#bfe600"}
-                                onMouseLeave={e => e.currentTarget.style.background = "#CCFF00"}
-                                >
-                                    Browse Marketplace
-                                </button>
-                            </a>
+                {activeTab === "rentals" ? (
+                    <div style={{ marginBottom: "32px" }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
+                            <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#111111", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+                                <Terminal size={16} color="#6B6B6B" /> Active Agents
+                                <span style={{ fontSize: "0.75rem", background: "#FAFAFA", color: "#6B6B6B", padding: "2px 8px", borderRadius: "4px", fontWeight: 600 }}>
+                                    {loading ? "..." : rentals.length}
+                                </span>
+                            </h2>
+                            <button onClick={loadRentals} style={{
+                                background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "6px",
+                                padding: "6px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px",
+                                fontSize: "0.8rem", color: "#6B6B6B", transition: "all 0.15s"
+                            }}
+                            onMouseEnter={e => { e.currentTarget.style.borderColor = "#E8E8E8"; e.currentTarget.style.color = "#111111"; }}
+                            onMouseLeave={e => { e.currentTarget.style.borderColor = "#E8E8E8"; e.currentTarget.style.color = "#6B6B6B"; }}
+                            >
+                                <RefreshCw size={13} /> Refresh
+                            </button>
                         </div>
-                    ) : (
-                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: "16px" }}>
-                            {rentals.map(rental => (
-                                <RentalCard key={rental.id} rental={rental} />
+
+                        {loading ? (
+                            <div style={{ textAlign: "center", padding: "80px", color: "#9CA3AF" }}>Loading your agents...</div>
+                        ) : rentals.length === 0 ? (
+                            <div style={{
+                                background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "12px",
+                                padding: "56px 32px", textAlign: "center"
+                            }}>
+                                <Database size={32} color="#E8E8E8" style={{ margin: "0 auto 16px", display: "block" }} />
+                                <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#111111", marginBottom: "8px" }}>
+                                    No active agents
+                                </h3>
+                                <p style={{ fontSize: "0.9rem", color: "#6B6B6B", marginBottom: "24px", maxWidth: "360px", margin: "0 auto 24px" }}>
+                                    Deploy an agent from the marketplace to start automating prediction strategies.
+                                </p>
+                                <a href="/marketplace" style={{ textDecoration: "none" }}>
+                                    <button style={{
+                                        background: "#CCFF00", color: "#000000", border: "none",
+                                        padding: "10px 24px", borderRadius: "6px", fontSize: "0.9rem",
+                                        fontWeight: 700, cursor: "pointer", transition: "all 0.15s",
+                                        boxShadow: "0 2px 8px rgba(204,255,0,0.15)"
+                                    }}
+                                    onMouseEnter={e => e.currentTarget.style.background = "#bfe600"}
+                                    onMouseLeave={e => e.currentTarget.style.background = "#CCFF00"}
+                                    >
+                                        Browse Marketplace
+                                    </button>
+                                </a>
+                            </div>
+                        ) : (
+                            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: "16px" }}>
+                                {rentals.map(rental => (
+                                    <RentalCard key={rental.id} rental={rental} />
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    /* ── Creator Studio Tab ── */
+                    <div style={{ display: "flex", flexDirection: "column", gap: "24px", marginBottom: "32px" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                            <h2 style={{ fontSize: "1.1rem", fontWeight: 800, margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+                                <BarChart3 size={18} color="#165DFC" /> Managed Agents Performance
+                            </h2>
+                            <button onClick={loadEarnings} style={{
+                                background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "6px",
+                                padding: "6px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px",
+                                fontSize: "0.8rem", color: "#6B6B6B"
+                            }}>
+                                <RefreshCw size={13} /> Sync Stats
+                            </button>
+                        </div>
+
+                        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                            {builderEarnings.map((earn: any) => (
+                                <div 
+                                    key={earn.agentId}
+                                    style={{
+                                        background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "12px",
+                                        padding: "24px", display: "flex", flexDirection: "column", gap: "16px"
+                                    }}
+                                >
+                                    {/* Info header */}
+                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "16px" }}>
+                                        <div>
+                                            <h3 style={{ fontSize: "1.1rem", fontWeight: 700, margin: "0 0 4px 0" }}>{earn.name}</h3>
+                                            <p style={{ fontSize: "0.85rem", color: "#6B6B6B", margin: 0 }}>{earn.tagline}</p>
+                                        </div>
+                                        
+                                        {/* Sparkline chart */}
+                                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
+                                            <span style={{ fontSize: "0.7rem", color: "#9CA3AF", textTransform: "uppercase", fontWeight: 700 }}>30d revenue</span>
+                                            <Sparkline data={earn.sparkline} />
+                                        </div>
+                                    </div>
+
+                                    {/* Stats line */}
+                                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "12px" }}>
+                                        <div style={{ background: "#FAFAFA", border: "1px solid #E8E8E8", borderRadius: "8px", padding: "12px", textAlign: "center" }}>
+                                            <div style={{ fontSize: "0.75rem", color: "#9CA3AF", marginBottom: "4px" }}>Lifetime Earnings</div>
+                                            <div style={{ fontSize: "1.1rem", fontWeight: 800, color: "#165DFC" }}>{earn.lifetimeEarned} USDC</div>
+                                        </div>
+                                        <div style={{ background: "#FAFAFA", border: "1px solid #E8E8E8", borderRadius: "8px", padding: "12px", textAlign: "center" }}>
+                                            <div style={{ fontSize: "0.75rem", color: "#9CA3AF", marginBottom: "4px" }}>Active/Total Rentals</div>
+                                            <div style={{ fontSize: "1.1rem", fontWeight: 800, color: "#111111" }}>{earn.activeRentals} / {earn.totalRentals}</div>
+                                        </div>
+                                        <div style={{ background: "#FAFAFA", border: "1px solid #E8E8E8", borderRadius: "8px", padding: "12px", textAlign: "center" }}>
+                                            <div style={{ fontSize: "0.75rem", color: "#9CA3AF", marginBottom: "4px" }}>Upvotes</div>
+                                            <div style={{ fontSize: "1.1rem", fontWeight: 800, color: "#111111", display: "flex", alignItems: "center", justifyContent: "center", gap: "4px" }}>
+                                                <ArrowUp size={16} color="#0A7C4E" /> {earn.upvotes}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* A/B Test statistics section */}
+                                    {earn.abTestStats && (
+                                        <div style={{ borderTop: "1px dashed #E8E8E8", paddingTop: "12px", fontSize: "0.85rem", color: "#6B6B6B" }}>
+                                            <span style={{ fontWeight: 700, color: "#111111" }}>A/B Pricing Active:</span>{" "}
+                                            Variant A (${earn.abTestStats.priceA}/day) vs Variant B (${earn.abTestStats.priceB}/day) · 
+                                            Variant A: {earn.abTestStats.variantARentals} rentals vs Variant B: {earn.abTestStats.variantBRentals} rentals.
+                                        </div>
+                                    )}
+
+                                    {/* Static heuristic nudge warning */}
+                                    {earn.tip && (
+                                        <div style={{
+                                            display: "flex", alignItems: "center", gap: "8px",
+                                            background: "rgba(255,196,0,0.06)", border: "1px solid rgba(255,196,0,0.25)",
+                                            padding: "10px 14px", borderRadius: "8px", fontSize: "0.85rem", color: "#92600A"
+                                        }}>
+                                            <HelpCircle size={16} /> {earn.tip}
+                                        </div>
+                                    )}
+                                </div>
                             ))}
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
 
                 {/* Protocol info strip */}
                 <div style={{ background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "12px", padding: "20px" }}>

@@ -253,9 +253,12 @@ export default function ProfilePage({ params }: { params: Promise<{ wallet: stri
                                     {user?.username || "Anonymous Hunter"}
                                 </h1>
                             )}
-                            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "8px" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "8px", flexWrap: "wrap" }}>
                                 <span style={{ background: "#FAFAFA", color: "#9CA3AF", padding: "4px 12px", borderRadius: "16px", fontSize: "0.85rem", fontWeight: 600, fontFamily: "monospace" }}>
                                     {displayWallet.slice(0, 6)}...{displayWallet.slice(-4)}
+                                </span>
+                                <span style={{ background: "rgba(22, 93, 252, 0.08)", color: "#165DFC", padding: "4px 12px", borderRadius: "16px", fontSize: "0.85rem", fontWeight: 700, display: "flex", alignItems: "center", gap: "4px" }}>
+                                    <Award size={14} /> {(user?.agents?.length || 0) * 50 + (user?.hunted?.length || 0) * 20 + 100} Karma
                                 </span>
                                 {user?.createdAt && (
                                     <>

@@ -60,6 +60,7 @@ model Agent {
   hunter   User?   @relation("HuntedAgents", fields: [hunterId], references: [id])
   
   rentals Rental[] @relation("AgentRentals")
+  comments Comment[]
 }
 
 model Rental {
@@ -92,4 +93,20 @@ model Rental {
 
   containerStatus String  @default("pending") // pending, running, stopped
   containerId     String?
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  agentId   String
+  agent     Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  wallet    String
+  username  String?
+  avatarUrl String?
+  content   String
+  parentId  String?
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   Comment[] @relation("CommentReplies")
+  upvotes   Int      @default(0)
+  isQA      Boolean  @default(false)
+  createdAt DateTime @default(now())
 }

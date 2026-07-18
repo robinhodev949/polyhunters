@@ -34,7 +34,7 @@ export async function POST(req: Request) {
 
         const pricing = await priceRental({
             wallet: normalizedRenter,
-            pricePerDay: agent.pricePerDay,
+            agent,
             days
         });
 

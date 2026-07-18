@@ -2,12 +2,96 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useAccount } from "wagmi";
 import { AgentCard } from "@/components/AgentCard";
-import { Search } from "lucide-react";
+import { RecommendationRails } from "@/components/RecommendationRails";
+import { Search, FolderOpen } from "lucide-react";
 
 const CATEGORIES = ["All", "Prediction Market", "Crypto", "Politics", "Sports", "DeFi", "Research"];
 
+const CURATED_COLLECTIONS = [
+    { id: "defi-bots", name: "DeFi Yield Bots", tags: ["DeFi", "Crypto"], description: "Maximize liquidity pool fees and interest rates." },
+    { id: "nlp-oracles", name: "Sentiment & News Oracles", tags: ["Politics", "Research"], description: "Trade on political outcomes and current events." },
+    { id: "sports-forecasters", name: "Sports Analytics Forecasters", tags: ["Sports", "Research"], description: "Predict match margins, scoring volumes, and stats." }
+];
+
+function DailyCycleTimer() {
+    const [timeLeft, setTimeLeft] = useState("");
+
+    useEffect(() => {
+        const updateTimer = () => {
+            const now = new Date();
+            const tomorrow = new Date(Date.UTC(
+                now.getUTCFullYear(),
+                now.getUTCMonth(),
+                now.getUTCDate() + 1,
+                0, 0, 0, 0
+            ));
+            const diffMs = tomorrow.getTime() - now.getTime();
+            
+            const hours = Math.floor(diffMs / (1000 * 60 * 60));
+            const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+            const format = (n: number) => String(n).padStart(2, "0");
+            setTimeLeft(`${format(hours)}h ${format(mins)}m ${format(secs)}s`);
+        };
+
+        updateTimer();
+        const interval = setInterval(updateTimer, 1000);
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <div style={{
+            background: "rgba(22,93,252,0.04)", border: "1px solid rgba(22,93,252,0.12)",
+            padding: "8px 14px", borderRadius: "8px", fontSize: "0.85rem", fontWeight: 700,
+            color: "#165DFC", display: "inline-flex", alignItems: "center", gap: "6px"
+        }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Cycle Resets In: <span style={{ fontFamily: "monospace" }}>{timeLeft}</span>
+        </div>
+    );
+}
+
+function CategoryPolygonIcon({ category, active }: { category: string; active: boolean }) {
+    const color = active ? "#CCFF00" : "#165DFC";
+    
+    // SVG points mappings for low-poly geometry structures
+    let points = "12,4 20,8 20,16 12,20 4,16 4,8"; // Hexagon for default/All
+    if (category === "Prediction Market") {
+        points = "12,4 20,18 4,18"; // Triangle
+    } else if (category === "Crypto") {
+        points = "12,4 20,12 12,20 4,12"; // Rhombus/Diamond
+    } else if (category === "Politics") {
+        points = "12,4 20,10 17,19 7,19 4,10"; // Pentagon
+    } else if (category === "Sports") {
+        points = "12,4 18,6 20,12 18,18 12,20 6,18 4,12 6,6"; // Octagon
+    } else if (category === "DeFi") {
+        points = "5,5 19,5 19,19 5,19"; // Square
+    } else if (category === "Research") {
+        points = "12,4 15,10 21,11 16,15 18,21 12,18 6,21 8,15 3,11 9,10"; // Star/Heptagon
+    }
+
+    return (
+        <svg width="14" height="14" viewBox="0 0 24 24" style={{ overflow: "visible" }}>
+            <polygon
+                points={points}
+                fill="none"
+                stroke={color}
+                strokeWidth="2.5"
+                strokeLinejoin="round"
+            />
+        </svg>
+    );
+}
+
 export default function MarketplacePage() {
+    const searchParams = useSearchParams();
+    const similarTo = searchParams.get("similarTo");
+    const { address } = useAccount();
+
     const [agents, setAgents] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
@@ -86,9 +170,12 @@ export default function MarketplacePage() {
             {/* Header Section */}
             <div style={{ background: "#FFFFFF", borderBottom: "1px solid #E8E8E8", padding: "48px 32px 32px" }}>
                 <div style={{ maxWidth: "860px", margin: "0 auto" }}>
-                    <h1 style={{ fontSize: "2rem", fontWeight: 800, color: "#111111", marginBottom: "12px", letterSpacing: "-0.02em" }}>
-                        AI Agent Feed
-                    </h1>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px", marginBottom: "12px" }}>
+                        <h1 style={{ fontSize: "2rem", fontWeight: 800, color: "#111111", margin: 0, letterSpacing: "-0.02em" }}>
+                            AI Agent Feed
+                        </h1>
+                        <DailyCycleTimer />
+                    </div>
                     <p style={{ fontSize: "1.05rem", color: "#6B6B6B", marginBottom: "32px", lineHeight: 1.6 }}>
                         Discover and deploy prediction market algorithms. Rent instantly using USDC on Robinhood Chain L2.
                     </p>
@@ -110,9 +197,13 @@ export default function MarketplacePage() {
                                     backgroundColor: activeCategory === cat ? "#165DFC" : "#FFFFFF",
                                     borderColor: activeCategory === cat ? "#165DFC" : "#E8E8E8",
                                     color: activeCategory === cat ? "#FFFFFF" : "#6B6B6B",
-                                    boxShadow: activeCategory === cat ? "0 2px 8px rgba(22,93,252,0.15)" : "none"
+                                    boxShadow: activeCategory === cat ? "0 2px 8px rgba(22,93,252,0.15)" : "none",
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    gap: "6px"
                                 }}
                             >
+                                <CategoryPolygonIcon category={cat} active={activeCategory === cat} />
                                 {cat}
                             </button>
                         ))}
@@ -122,6 +213,40 @@ export default function MarketplacePage() {
 
             {/* List Content */}
             <div style={{ maxWidth: "860px", margin: "0 auto", padding: "48px 32px" }}>
+                
+                <RecommendationRails wallet={address} similarTo={similarTo} market={networkFilter === "all" ? "polymarket" : networkFilter} />
+
+                {/* Curated Thematic Collections */}
+                <div style={{ marginBottom: "40px" }}>
+                    <h4 style={{ fontSize: "1.1rem", fontWeight: 800, margin: "0 0 12px 0", color: "#111111", display: "flex", alignItems: "center", gap: "8px", letterSpacing: "-0.01em" }}>
+                        <FolderOpen size={16} color="#165DFC" /> Curated Agent Collections
+                    </h4>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "16px" }}>
+                        {CURATED_COLLECTIONS.map(col => (
+                            <div 
+                                key={col.id}
+                                onClick={() => {
+                                    setActiveCategory("All");
+                                    setSearchQuery(col.tags[0]);
+                                }}
+                                style={{
+                                    background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: "10px",
+                                    padding: "16px", cursor: "pointer", transition: "all 0.15s"
+                                }}
+                                onMouseEnter={e => { e.currentTarget.style.borderColor = "#CCFF00"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(204,255,0,0.06)"; }}
+                                onMouseLeave={e => { e.currentTarget.style.borderColor = "#E8E8E8"; e.currentTarget.style.boxShadow = "none"; }}
+                            >
+                                <div style={{ fontWeight: 700, fontSize: "0.95rem", marginBottom: "4px" }}>{col.name}</div>
+                                <div style={{ fontSize: "0.8rem", color: "#6B6B6B", lineHeight: 1.4, marginBottom: "8px" }}>{col.description}</div>
+                                <div style={{ display: "flex", gap: "6px" }}>
+                                    {col.tags.map(t => (
+                                        <span key={t} style={{ fontSize: "0.72rem", background: "rgba(22,93,252,0.06)", color: "#165DFC", padding: "2px 6px", borderRadius: "4px", fontWeight: 600 }}>{t}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
                 
                 <div style={{ 
                     display: "flex", 
