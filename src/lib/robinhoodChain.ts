@@ -213,3 +213,41 @@ export async function sendUSDC(
     throw new Error(`Failed to send payout transaction: ${error.message}`);
   }
 }
+
+export const HUNTER_CONTRACT_ADDRESS = process.env.HUNTER_CONTRACT_ADDRESS || "0x8cad179555e3de1e99cbdb900eae0593b9ec79db";
+export const HUNTER_HOLDER_MIN_BALANCE = Number(process.env.HUNTER_HOLDER_MIN_BALANCE || 1000);
+
+export async function getHunterBalance(wallet: string): Promise<number> {
+  if (!isAddress(wallet)) {
+    return 0;
+  }
+  try {
+    const publicClient = getPublicClient();
+    const balanceOfAbi = [
+      {
+        inputs: [{ name: 'account', type: 'address' }],
+        name: 'balanceOf',
+        outputs: [{ name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function'
+      }
+    ] as const;
+
+    const balanceUnits = await publicClient.readContract({
+      address: HUNTER_CONTRACT_ADDRESS as `0x${string}`,
+      abi: balanceOfAbi,
+      functionName: 'balanceOf',
+      args: [wallet as `0x${string}`],
+    });
+
+    return Number(balanceUnits) / 1e18;
+  } catch (error) {
+    console.error("getHunterBalance error, return 0:", error);
+    return 0;
+  }
+}
+
+export async function isHunterHolder(wallet: string): Promise<boolean> {
+  const balance = await getHunterBalance(wallet);
+  return balance >= HUNTER_HOLDER_MIN_BALANCE;
+}

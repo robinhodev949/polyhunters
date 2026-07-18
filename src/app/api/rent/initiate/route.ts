@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
 import { getAddress, isAddress } from "viem";
+import { priceRental } from "@/lib/pricing";
+import { generateRentalCode } from "@/lib/rentalCode";
 
 const ESCROW_WALLET = process.env.ESCROW_WALLET_ADDRESS || "";
 
@@ -30,7 +32,13 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Agent not found." }, { status: 404 });
         }
 
-        const totalAmount = agent.pricePerDay * days;
+        const pricing = await priceRental({
+            wallet: normalizedRenter,
+            pricePerDay: agent.pricePerDay,
+            days
+        });
+
+        const totalAmount = pricing.totalAmount;
         const expiresAt   = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
 
         // Upsert the renter user
@@ -40,25 +48,37 @@ export async function POST(req: Request) {
             update: {},
         });
 
-        // Create the rental in pending state
+        const isFree = totalAmount === 0;
+
+        // Create the rental
         const rental = await db.rental.create({
             data: {
                 userId:        user.id,
                 agentId:       agent.id,
                 totalAmount,
+                originalAmount: pricing.originalAmount,
+                discountTier:  pricing.discountTier,
                 expiresAt,
-                paymentStatus: "pending",
+                paymentStatus: isFree ? "confirmed" : "pending",
+                containerStatus: isFree ? "running" : "pending",
+                startedAt:     isFree ? new Date() : null,
+                rentalCode:    isFree ? generateRentalCode() : null,
                 payoutStatus:  "unpaid",
             },
         });
 
         return NextResponse.json({
-            rentalId:     rental.id,
-            escrowWallet: ESCROW_WALLET,
+            rentalId:       rental.id,
+            escrowWallet:   ESCROW_WALLET,
             totalAmount,
+            originalAmount: pricing.originalAmount,
+            discountTier:   pricing.discountTier,
+            rentalCode:     rental.rentalCode,
             days,
             expiresAt,
-            message:      `Send exactly ${totalAmount} USDC to the escrow wallet, then call /api/rent/verify with your transaction hash.`,
+            message:        isFree 
+                ? "Rental confirmed via $HUNTER free tier discount program."
+                : `Send exactly ${totalAmount} USDC to the escrow wallet, then call /api/rent/verify with your transaction hash.`,
         });
     } catch (err: any) {
         console.error("rent/initiate error:", err);

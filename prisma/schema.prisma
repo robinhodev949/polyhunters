@@ -26,6 +26,9 @@ model User {
   agents  Agent[]  @relation("OwnedAgents")
   rentals Rental[] @relation("UserRentals")
   hunted  Agent[]  @relation("HuntedAgents")
+
+  hunterDiscountStartedAt DateTime?
+  interestTags            String[] @default([])
 }
 
 model Agent {
@@ -34,6 +37,8 @@ model Agent {
   tagline         String
   description     String?
   pricePerDay     Float
+  pricePerDayVariantB Float?
+  abTestSplitPercent  Int?
   status          String   @default("live") // live or beta
   roi             Float    @default(0.0)
   tags            String[]
@@ -64,10 +69,12 @@ model Rental {
   expiresAt DateTime
 
   // Unique rental code issued to the renter (e.g. RC-a1b2c3d4)
-  rentalCode String   @unique @default("")
+  rentalCode String?  @unique
 
   // Payment tracking
   totalAmount    Float    // USDC amount the renter must pay
+  originalAmount Float?
+  discountTier   String   @default("none") // none | hunter_free | hunter_half
   depositTxSig   String?  // EVM transaction hash proving deposit
   paymentStatus  String   @default("pending") // pending | confirmed | expired
   

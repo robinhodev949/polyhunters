@@ -1,13 +1,8 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
 import { verifyUSDCDeposit } from "@/lib/robinhoodChain";
-import { randomBytes } from "crypto";
 import { getAddress, isAddress } from "viem";
-
-/** Generates a unique rental code like RC-a1b2c3d4 */
-function generateRentalCode(): string {
-    return "RC-" + randomBytes(4).toString("hex");
-}
+import { generateRentalCode } from "@/lib/rentalCode";
 
 /**
  * POST /api/rent/verify

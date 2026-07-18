@@ -1,49 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { AgentCard } from "@/components/AgentCard";
 import { Search } from "lucide-react";
 
 const CATEGORIES = ["All", "Prediction Market", "Crypto", "Politics", "Sports", "DeFi", "Research"];
-
-const EXAMPLE_AGENTS: any[] = [
-    {
-        id: "example-alpha-oracle",
-        name: "AlphaOracle",
-        tagline: "GPT-4 political sentiment agent for Polymarket prediction markets",
-        description: "Ingests Twitter/X, Reddit, and news in real-time.",
-        pricePerDay: 8,
-        status: "live",
-        roi: 34.7,
-        tags: ["Politics", "Prediction Market"],
-        upvotes: 412,
-        marketSourceIds: ["polymarket"]
-    },
-    {
-        id: "example-crypto-hawk",
-        name: "CryptoHawk",
-        tagline: "On-chain signal aggregator trained on 18 months of prediction market crypto data",
-        description: "Analyzes on-chain velocity and exchange flows.",
-        pricePerDay: 12,
-        status: "live",
-        roi: 28.3,
-        tags: ["Crypto", "DeFi"],
-        upvotes: 287,
-        marketSourceIds: ["polymarket"]
-    },
-    {
-        id: "example-sports-oracle",
-        name: "SportsOracle",
-        tagline: "ML model trained on 5 years of sports outcomes for prediction markets",
-        description: "Evaluates player stats, weather, and injury reports.",
-        pricePerDay: 6,
-        status: "beta",
-        roi: 19.1,
-        tags: ["Sports", "Prediction Market"],
-        upvotes: 134,
-        marketSourceIds: ["polymarket"]
-    }
-];
 
 export default function MarketplacePage() {
     const [agents, setAgents] = useState<any[]>([]);
@@ -74,17 +36,13 @@ export default function MarketplacePage() {
                 const res = await fetch("/api/agents");
                 if (res.ok) {
                     const data = await res.json();
-                    if (data.length > 0) {
-                        setAgents(data);
-                    } else {
-                        setAgents(EXAMPLE_AGENTS);
-                    }
+                    setAgents(data);
                 } else {
-                    setAgents(EXAMPLE_AGENTS);
+                    setAgents([]);
                 }
             } catch (err) {
                 console.error(err);
-                setAgents(EXAMPLE_AGENTS);
+                setAgents([]);
             } finally {
                 setLoading(false);
             }
@@ -243,6 +201,68 @@ export default function MarketplacePage() {
                 {loading ? (
                     <div style={{ textAlign: "center", padding: "80px" }}>
                         <div className="spinner" style={{ border: "3px solid #E8E8E8", borderTopColor: "#165DFC", borderRadius: "50%", width: "24px", height: "24px", animation: "spin 1s linear infinite", margin: "0 auto" }}></div>
+                    </div>
+                ) : agents.length === 0 ? (
+                    <div style={{
+                        textAlign: "center",
+                        padding: "80px 40px",
+                        background: "#FFFFFF",
+                        borderRadius: "16px",
+                        border: "1px solid #E8E8E8",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        maxWidth: "600px",
+                        margin: "40px auto 0",
+                        boxShadow: "0 4px 20px rgba(0,0,0,0.02)"
+                    }}>
+                        <div style={{ marginBottom: "32px" }}>
+                            <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 50 L50 20 L80 50 L50 80 Z" stroke="#E8E8E8" strokeWidth="1" />
+                                <path d="M50 20 L50 80" stroke="#E8E8E8" strokeWidth="1" />
+                                <path d="M20 50 L80 50" stroke="#E8E8E8" strokeWidth="1" />
+                                <circle cx="20" cy="50" r="3" fill="#E8E8E8" />
+                                <circle cx="50" cy="20" r="3" fill="#E8E8E8" />
+                                <circle cx="80" cy="50" r="3" fill="#E8E8E8" />
+                                <circle cx="50" cy="80" r="3" fill="#E8E8E8" />
+                                <circle cx="50" cy="50" r="4" fill="#165DFC" />
+                                <polygon points="36,36 46,32 56,36 60,46 56,56 46,60 36,56 32,46" fill="none" stroke="#CCFF00" strokeWidth="3" />
+                                <line x1="53" y1="53" x2="68" y2="68" stroke="#CCFF00" strokeWidth="4" strokeLinecap="round" />
+                            </svg>
+                        </div>
+                        <h2 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#111111", margin: "0 0 12px 0", letterSpacing: "-0.02em" }}>
+                            No agents listed yet — be the first.
+                        </h2>
+                        <p style={{ fontSize: "1rem", color: "#6B6B6B", margin: "0 0 32px 0", lineHeight: 1.6 }}>
+                            PolyHunt is a fresh marketplace. Build an agent and earn USDC, or check back soon for what the community ships.
+                        </p>
+                        <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", justifyContent: "center" }}>
+                            <Link href="/submit" style={{ textDecoration: "none" }}>
+                                <button style={{
+                                    background: "#CCFF00", color: "#000000", border: "1px solid #CCFF00",
+                                    padding: "12px 24px", borderRadius: "8px", fontSize: "0.95rem",
+                                    fontWeight: 700, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px",
+                                    transition: "all 0.15s", boxShadow: "0 2px 8px rgba(204,255,0,0.15)"
+                                }}
+                                onMouseEnter={e => { e.currentTarget.style.background = "#bfe600"; e.currentTarget.style.borderColor = "#bfe600"; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = "#CCFF00"; e.currentTarget.style.borderColor = "#CCFF00"; }}
+                                >
+                                    Submit Your Agent
+                                </button>
+                            </Link>
+                            <Link href="/docs" style={{ textDecoration: "none" }}>
+                                <button style={{
+                                    background: "#FFFFFF", color: "#111111", border: "1px solid #E8E8E8",
+                                    padding: "12px 24px", borderRadius: "8px", fontSize: "0.95rem",
+                                    fontWeight: 600, cursor: "pointer", transition: "all 0.15s"
+                                }}
+                                onMouseEnter={e => { e.currentTarget.style.background = "#FAFAFA"; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = "#FFFFFF"; }}
+                                >
+                                    How Renting Works
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                 ) : processedAgents.length === 0 ? (
                     <div style={{ textAlign: "center", padding: "80px", background: "#FFFFFF", borderRadius: "12px", border: "1px solid #E8E8E8" }}>
