@@ -46,6 +46,56 @@ export async function GET() {
         // Clean up test users
         await db.user.deleteMany({ where: { wallet: testWallet1 } });
 
+        // Test Case 3: Holder Discount E2E Simulation
+        const testWallet2 = "0x2222222222222222222222222222222222222222";
+        await db.user.deleteMany({ where: { wallet: testWallet2 } });
+
+        // Step 1: Calculate first rental (should be free 14-day trial)
+        const priceResult2a = await priceRental({
+            wallet: testWallet2,
+            pricePerDay: 10,
+            days: 3
+        });
+
+        await assert(
+            "Holder First Rental: Free Trial (0 USDC)",
+            priceResult2a.totalAmount === 0 && priceResult2a.discountTier === "hunter_free",
+            `Expected 0 USDC and 'hunter_free' tier. Got: ${JSON.stringify(priceResult2a)}`
+        );
+
+        // Verify start date was set
+        const dbUser = await db.user.findUnique({ where: { wallet: testWallet2 } });
+        await assert(
+            "Holder Discount Started At Timestamp Populated",
+            dbUser !== null && dbUser.hunterDiscountStartedAt !== null,
+            "Discount start timestamp was not saved in DB."
+        );
+
+        // Step 2: Simulate 15 days passing by updating DB timestamp
+        if (dbUser) {
+            const fifteenDaysAgo = new Date(Date.now() - 15 * 24 * 60 * 60 * 1000);
+            await db.user.update({
+                where: { id: dbUser.id },
+                data: { hunterDiscountStartedAt: fifteenDaysAgo }
+            });
+        }
+
+        // Calculate second rental (should transition to 50% off)
+        const priceResult2b = await priceRental({
+            wallet: testWallet2,
+            pricePerDay: 10,
+            days: 3
+        });
+
+        await assert(
+            "Holder Second Rental (15 Days Later): 50% Off",
+            priceResult2b.totalAmount === 15 && priceResult2b.discountTier === "hunter_half",
+            `Expected 15 USDC and 'hunter_half' tier. Got: ${JSON.stringify(priceResult2b)}`
+        );
+
+        // Clean up test users
+        await db.user.deleteMany({ where: { wallet: testWallet2 } });
+
         return NextResponse.json({
             success: passed,
             testSuite: "PolyHunt Pricing Engine Test Suite",
