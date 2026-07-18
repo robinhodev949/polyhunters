@@ -13,13 +13,7 @@ interface LeaderboardEntry {
     badge: string;
 }
 
-const LEADERBOARD_DATA: LeaderboardEntry[] = [
-    { rank: 1, wallet: "0x784b1A416D313Ae5c82fE8cFa434A135b264bb2c", points: 8450, agentsHunted: 6, badge: "Genesis Hunter" },
-    { rank: 2, wallet: "0x8cad179555e3de1e99cbdb900eae0593b9ec79db", points: 6200, agentsHunted: 4, badge: "Elite Builder" },
-    { rank: 3, wallet: "0x165DFC2B47ca0584D1f67fE5C3b9Cc55E2D8cfa4", points: 4900, agentsHunted: 3, badge: "Genesis Hunter" },
-    { rank: 4, wallet: "0x0047ca0582fE8cFa434A135b264bb2c165DFC2B4", points: 3150, agentsHunted: 2, badge: "Genesis Hunter" },
-    { rank: 5, wallet: "0x9CA3AF4135b264bb2c165DFC2B47ca0584D1f67f", points: 2800, agentsHunted: 2, badge: "Genesis Hunter" }
-];
+const LEADERBOARD_DATA: LeaderboardEntry[] = [];
 
 export default function Season1Page() {
     const { isConnected, address } = useAccount();
@@ -151,7 +145,7 @@ export default function Season1Page() {
                             Total Rewards Pool
                         </div>
                         <div style={{ fontSize: "1.8rem", fontWeight: 800, color: "#165DFC" }}>
-                            1,000,000 $HUNTER
+                            $2,000 in $HUNTER
                         </div>
                         <div style={{ fontSize: "0.8rem", color: "#9CA3AF", marginTop: "4px" }}>
                             Funded by platform protocol fees
@@ -175,10 +169,10 @@ export default function Season1Page() {
                             Season Ends In
                         </div>
                         <div style={{ fontSize: "1.8rem", fontWeight: 800, color: "#111111" }}>
-                            6d : 14h : 22m
+                            30d : 00h : 00m
                         </div>
                         <div style={{ fontSize: "0.8rem", color: "#9CA3AF", marginTop: "4px" }}>
-                            Ends: July 31, 2026
+                            Ends: August 18, 2026
                         </div>
                     </div>
 
@@ -292,43 +286,51 @@ export default function Season1Page() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {LEADERBOARD_DATA.map((entry) => (
-                                    <tr key={entry.rank} style={{ 
-                                        borderBottom: "1px solid #FAFAFA",
-                                        background: entry.rank === 1 ? "rgba(204,255,0,0.03)" : "none",
-                                        transition: "background 0.15s"
-                                    }}
-                                    onMouseEnter={e => e.currentTarget.style.background = "#FAFAFA"}
-                                    onMouseLeave={e => e.currentTarget.style.background = entry.rank === 1 ? "rgba(204,255,0,0.03)" : "none"}
-                                    >
-                                        <td style={{ padding: "16px", fontWeight: 700, fontSize: "0.95rem" }}>
-                                            {entry.rank === 1 ? "🥇" : entry.rank === 2 ? "🥈" : entry.rank === 3 ? "🥉" : `#${entry.rank}`}
-                                        </td>
-                                        <td style={{ padding: "16px", fontFamily: "monospace", fontSize: "0.9rem", color: "#111111" }}>
-                                            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                                                <span>{entry.wallet.slice(0, 8)}...{entry.wallet.slice(-6)}</span>
-                                                <button onClick={() => handleCopy(entry.wallet)} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", padding: "2px", color: copiedWallet === entry.wallet ? "#0A7C4E" : "#9CA3AF" }}>
-                                                    {copiedWallet === entry.wallet ? <Check size={14} /> : <Copy size={14} />}
-                                                </button>
-                                            </div>
-                                        </td>
-                                        <td style={{ padding: "16px", fontSize: "0.95rem" }}>{entry.agentsHunted}</td>
-                                        <td style={{ padding: "16px", fontWeight: 700, color: "#165DFC", fontSize: "0.95rem" }}>{entry.points} pts</td>
-                                        <td style={{ padding: "16px" }}>
-                                            <span style={{ 
-                                                fontSize: "0.75rem", 
-                                                fontWeight: 600, 
-                                                color: entry.badge === "Elite Builder" ? "#165DFC" : "#6B6B6B",
-                                                background: entry.badge === "Elite Builder" ? "rgba(22,93,252,0.08)" : "#FAFAFA",
-                                                padding: "4px 8px",
-                                                borderRadius: "6px",
-                                                border: `1px solid ${entry.badge === "Elite Builder" ? "rgba(22,93,252,0.15)" : "#E8E8E8"}`
-                                            }}>
-                                                {entry.badge}
-                                            </span>
+                                {LEADERBOARD_DATA.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={5} style={{ padding: "48px 16px", textAlign: "center", color: "#6B6B6B", fontSize: "0.95rem" }}>
+                                            No hunters have registered points yet this season. Be the first to hunt an agent!
                                         </td>
                                     </tr>
-                                ))}
+                                ) : (
+                                    LEADERBOARD_DATA.map((entry) => (
+                                        <tr key={entry.rank} style={{ 
+                                            borderBottom: "1px solid #FAFAFA",
+                                            background: entry.rank === 1 ? "rgba(204,255,0,0.03)" : "none",
+                                            transition: "background 0.15s"
+                                        }}
+                                        onMouseEnter={e => e.currentTarget.style.background = "#FAFAFA"}
+                                        onMouseLeave={e => e.currentTarget.style.background = entry.rank === 1 ? "rgba(204,255,0,0.03)" : "none"}
+                                        >
+                                            <td style={{ padding: "16px", fontWeight: 700, fontSize: "0.95rem" }}>
+                                                {entry.rank === 1 ? "🥇" : entry.rank === 2 ? "🥈" : entry.rank === 3 ? "🥉" : `#${entry.rank}`}
+                                            </td>
+                                            <td style={{ padding: "16px", fontFamily: "monospace", fontSize: "0.9rem", color: "#111111" }}>
+                                                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                                                    <span>{entry.wallet.slice(0, 8)}...{entry.wallet.slice(-6)}</span>
+                                                    <button onClick={() => handleCopy(entry.wallet)} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", padding: "2px", color: copiedWallet === entry.wallet ? "#0A7C4E" : "#9CA3AF" }}>
+                                                        {copiedWallet === entry.wallet ? <Check size={14} /> : <Copy size={14} />}
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td style={{ padding: "16px", fontSize: "0.95rem" }}>{entry.agentsHunted}</td>
+                                            <td style={{ padding: "16px", fontWeight: 700, color: "#165DFC", fontSize: "0.95rem" }}>{entry.points} pts</td>
+                                            <td style={{ padding: "16px" }}>
+                                                <span style={{ 
+                                                    fontSize: "0.75rem", 
+                                                    fontWeight: 600, 
+                                                    color: entry.badge === "Elite Builder" ? "#165DFC" : "#6B6B6B",
+                                                    background: entry.badge === "Elite Builder" ? "rgba(22,93,252,0.08)" : "#FAFAFA",
+                                                    padding: "4px 8px",
+                                                    borderRadius: "6px",
+                                                    border: `1px solid ${entry.badge === "Elite Builder" ? "rgba(22,93,252,0.15)" : "#E8E8E8"}`
+                                                }}>
+                                                    {entry.badge}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
