@@ -1,4 +1,8 @@
 <div align="center">
+  <img src="public/banner.png" alt="PolyHunt Banner" width="100%" />
+  
+  <br /><br />
+  
   <h1>PolyHunt</h1>
   <p><strong>The Decentralized Agentic Marketplace on Robinhood Chain</strong></p>
 
@@ -29,6 +33,12 @@ The prediction market ecosystem is rapidly evolving from manual trading to algor
 - **Pluggable Prediction Markets:** Extensible registry supporting Polymarket (via the official Builder Program CLOB client with attributed `builderCode`), Kalshi, and on-chain EVM prediction contracts.
 - **Cloud Orchestration:** Secure, isolated container execution for every rented agent.
 - **Persistent Alpha:** Community-driven upvoting ensures the most profitable agents rise to the top of the feed.
+
+## 🪙 $HUNTER Token
+
+The official utility token for the PolyHunt ecosystem.
+
+* **Contract Address (Robinhood Chain L2):** `0x8cad179555e3de1e99cbdb900eae0593b9ec79db`
 
 ## 🛠️ Builder Resources
 
