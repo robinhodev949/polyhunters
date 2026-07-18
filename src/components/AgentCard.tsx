@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowUp, Play } from "lucide-react";
 import Link from "next/link";
 import type { Agent } from "@prisma/client";
@@ -15,6 +15,34 @@ export function AgentCard({ agent, compact = false }: AgentCardProps) {
     const [upvotes, setUpvotes] = useState(agent.upvotes);
     const [hasUpvoted, setHasUpvoted] = useState(false);
     const [showModal, setShowModal] = useState(false);
+
+    // 24h Launch Countdown timer for newly-submitted agents
+    const [launchTimeLeft, setLaunchTimeLeft] = useState("");
+    const [isLaunchActive, setIsLaunchActive] = useState(false);
+
+    useEffect(() => {
+        if (!agent.createdAt) return;
+        const createdTime = new Date(agent.createdAt).getTime();
+        const launchEndTime = createdTime + 24 * 60 * 60 * 1000;
+
+        const updateLaunchTimer = () => {
+            const now = Date.now();
+            const diffMs = launchEndTime - now;
+            if (diffMs <= 0) {
+                setIsLaunchActive(false);
+                return;
+            }
+            setIsLaunchActive(true);
+            const hours = Math.floor(diffMs / (1000 * 60 * 60));
+            const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+            const format = (n: number) => String(n).padStart(2, "0");
+            setLaunchTimeLeft(`${format(hours)}h ${format(mins)}m`);
+        };
+
+        updateLaunchTimer();
+        const interval = setInterval(updateLaunchTimer, 30000);
+        return () => clearInterval(interval);
+    }, [agent.createdAt]);
 
     const handleUpvote = async (e: React.MouseEvent) => {
         e.preventDefault();
@@ -102,6 +130,21 @@ export function AgentCard({ agent, compact = false }: AgentCardProps) {
                         <span style={{ fontSize: compact ? "0.6rem" : "0.7rem", fontWeight: 700, color: "#0A7C4E", background: "rgba(10,124,78,0.1)", padding: compact ? "1px 6px" : "2px 8px", borderRadius: "12px", textTransform: "uppercase" }}>Live</span>
                     ) : (
                         <span style={{ fontSize: compact ? "0.6rem" : "0.7rem", fontWeight: 700, color: "#DA552F", background: "rgba(218,85,47,0.1)", padding: compact ? "1px 6px" : "2px 8px", borderRadius: "12px", textTransform: "uppercase" }}>Beta</span>
+                    )}
+                    {isLaunchActive && (
+                        <span style={{ 
+                            fontSize: compact ? "0.6rem" : "0.7rem", 
+                            fontWeight: 700, 
+                            color: "#165DFC", 
+                            background: "rgba(22,93,252,0.08)", 
+                            padding: compact ? "1px 6px" : "2px 8px", 
+                            borderRadius: "12px",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "4px"
+                        }}>
+                            🚀 Launch ends: {launchTimeLeft}
+                        </span>
                     )}
                 </div>
 
